@@ -17,4 +17,14 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="Consumer Secret" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_base_url"
+        android:inputType="textUri"
+        android:key="base_url"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Base URL"
+        />
 </PreferenceScreen>
