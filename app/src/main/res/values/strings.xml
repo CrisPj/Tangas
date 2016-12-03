@@ -82,4 +82,5 @@
 
     <string name="pref_default_consumer_key">ck_a0ce054c878aff32cf78fbdecfbf463233e36ff0</string>
     <string name="pref_default_consumer_secret">cs_f27e08fd7cbf3be3cdffbe3b0ca126254a0d8747</string>
+    <string name="menu_products">Products</string>
 </resources>
