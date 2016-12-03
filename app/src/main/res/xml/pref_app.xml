@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_consumer_key"
+        android:inputType="text"
+        android:key="consumer_key"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Consumer Key" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_consumer_secret"
+        android:inputType="text"
+        android:key="consumer_secret"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Consumer Secret" />
+</PreferenceScreen>
