@@ -9,11 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import tiendita.com.tienda.dummy.DummyContent;
-import tiendita.com.tienda.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import tiendita.com.tienda.contents.ProductContent;
+import tiendita.com.tienda.entities.Product;
 
 /**
  * A fragment representing a list of Items.
@@ -35,6 +34,7 @@ public class ProductoFragment extends Fragment {
      */
     public ProductoFragment() {
     }
+
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
@@ -69,7 +69,8 @@ public class ProductoFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyProductoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            ProductContent pc = new ProductContent(getContext());
+            recyclerView.setAdapter(new MyProductoRecyclerViewAdapter(pc.ITEMS, mListener));
         }
         return view;
     }
@@ -78,12 +79,7 @@ public class ProductoFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+        mListener = new ProductOnListInteractionListener();
     }
 
     @Override
@@ -104,6 +100,14 @@ public class ProductoFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Product item);
+    }
+
+    private class ProductOnListInteractionListener implements OnListFragmentInteractionListener {
+
+        @Override
+        public void onListFragmentInteraction(Product item) {
+            Toast.makeText(getContext(), "SHieet", Toast.LENGTH_LONG).show();
+        }
     }
 }

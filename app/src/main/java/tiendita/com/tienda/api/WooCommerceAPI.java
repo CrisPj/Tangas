@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;;
+import java.util.concurrent.ExecutionException;;import tiendita.com.tienda.entities.Product;
 
 
 public class WooCommerceAPI {
@@ -33,15 +33,20 @@ public class WooCommerceAPI {
 
     private JSONObject fetch(String request) throws ExecutionException, InterruptedException, JSONException {
         StringBuilder sb = new StringBuilder(baseURL);
-        return new JSONObject(requestTask.execute(new String[]{sb.append(request).toString()}).get());
+        String s = requestTask.execute(new String[]{sb.append(request).toString()}).get();
+        return new JSONObject(s);
     }
 
-    public ArrayList<Object> fetchAllProducts() throws InterruptedException, ExecutionException, JSONException {
+    public ArrayList<Product> fetchAllProducts() throws InterruptedException, ExecutionException, JSONException {
         JSONObject jsonResponse = fetch("wp-json/wc/v1/products");
         JSONArray jsonMainNode = jsonResponse.optJSONArray("products");
         if (jsonMainNode.length() < 0)
             return new ArrayList<>(0);
-        ArrayList<Object> products = new ArrayList(jsonMainNode.length());
-        return null;
+        ArrayList<Product> products = new ArrayList<Product>(jsonMainNode.length());
+        for (int i = 0; i < jsonMainNode.length(); i++) {
+            JSONObject jsonObject = jsonMainNode.getJSONObject(i);
+            products.add(new Product(jsonObject));
+        }
+        return products;
     }
 }
