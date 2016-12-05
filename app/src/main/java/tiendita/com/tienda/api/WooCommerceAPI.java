@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,22 +33,17 @@ public class WooCommerceAPI {
         requestTask = new APIRequestTask(context, consumer_key, consumer_secret);
     }
 
-    private JSONObject fetch(String request) throws ExecutionException, InterruptedException, JSONException {
+    private String fetch(String request) throws ExecutionException, InterruptedException, JSONException {
         StringBuilder sb = new StringBuilder(baseURL);
         String s = requestTask.execute(new String[]{sb.append(request).toString()}).get();
-        return new JSONObject(s);
+        return s;
     }
 
     public ArrayList<Product> fetchAllProducts() throws InterruptedException, ExecutionException, JSONException {
-        JSONObject jsonResponse = fetch("wp-json/wc/v1/products");
-        JSONArray jsonMainNode = jsonResponse.optJSONArray("products");
-        if (jsonMainNode.length() < 0)
-            return new ArrayList<>(0);
-        ArrayList<Product> products = new ArrayList<Product>(jsonMainNode.length());
-        for (int i = 0; i < jsonMainNode.length(); i++) {
-            JSONObject jsonObject = jsonMainNode.getJSONObject(i);
-            products.add(new Product(jsonObject));
-        }
+        String jsonResponse = fetch("wp-json/wc/v1/products");
+        Gson gson = new Gson();
+        ArrayList<Product> products = new ArrayList<>(0);
+        gson.fromJson(jsonResponse, products.getClass());
         return products;
     }
 }
