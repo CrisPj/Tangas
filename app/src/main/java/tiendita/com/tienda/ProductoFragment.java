@@ -70,7 +70,7 @@ public class ProductoFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             ProductContent pc = new ProductContent(getContext());
-            recyclerView.setAdapter(new MyProductoRecyclerViewAdapter(pc.ITEMS, mListener));
+            recyclerView.setAdapter(new MyProductoRecyclerViewAdapter(pc.ITEMS, mListener,context));
         }
         return view;
     }

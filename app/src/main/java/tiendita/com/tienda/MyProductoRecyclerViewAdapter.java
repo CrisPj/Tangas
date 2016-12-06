@@ -1,5 +1,6 @@
 package tiendita.com.tienda;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import tiendita.com.tienda.ProductoFragment.OnListFragmentInteractionListener;
 import tiendita.com.tienda.entities.Image;
@@ -21,11 +24,14 @@ import java.util.List;
  */
 public class MyProductoRecyclerViewAdapter extends RecyclerView.Adapter<MyProductoRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Product> mValues;
+    private final Product[] mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyProductoRecyclerViewAdapter(List<Product> items, OnListFragmentInteractionListener listener) {
+    Context context;
+
+    public MyProductoRecyclerViewAdapter(Product[] items, OnListFragmentInteractionListener listener, Context context) {
         mValues = items;
+        this.context = context;
         mListener = listener;
     }
 
@@ -38,13 +44,13 @@ public class MyProductoRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getId());
-        holder.mContentView.setText(mValues.get(position).getName());
+        holder.mItem = mValues[position];
+        holder.mIdView.setText(""+mValues[position].getId());
 
-        Image[] images = mValues.get(position).getImages();
+        holder.mContentView.setText(mValues[position].getName());
+        Image[] images = mValues[position].getImages();
         if (images.length > 0)
-            holder.mImageView.setImageURI(Uri.parse(images[0].getSrc()));
+            Picasso.with(context).load(images[0].getSrc()).into(holder.mImageView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +66,7 @@ public class MyProductoRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,8 +75,8 @@ public class MyProductoRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
         public final TextView mContentView;
         public final ImageView mImageView;
         public Product mItem;
-
         public ViewHolder(View view) {
+
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);

@@ -39,11 +39,11 @@ public class WooCommerceAPI {
         return s;
     }
 
-    public ArrayList<Product> fetchAllProducts() throws InterruptedException, ExecutionException, JSONException {
+    public Product[] fetchAllProducts() throws InterruptedException, ExecutionException, JSONException {
         String jsonResponse = fetch("wp-json/wc/v1/products");
         Gson gson = new Gson();
-        ArrayList<Product> products = new ArrayList<>(0);
-        gson.fromJson(jsonResponse, products.getClass());
+        Product[] products = new Product[0];
+        products = gson.fromJson(jsonResponse, products.getClass());
         return products;
     }
 }

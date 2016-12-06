@@ -22,7 +22,7 @@ public class ProductContent {
     /**
      * An array of sample (dummy) items.
      */
-    public List<Product> ITEMS = new ArrayList<Product>();
+    public Product[] ITEMS = new Product[0];
 
     public ProductContent(Context context){
         WooCommerceAPI wapi = new WooCommerceAPI(context);
