@@ -1,10 +1,12 @@
 package tiendita.com.tienda;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,7 +29,7 @@ public class OneProductActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String producto = extras.getString("producto");
         Gson gson = new Gson();
-        Product p = gson.fromJson(producto,Product.class);
+        Product p = gson.fromJson(producto, Product.class);
         ImageView mImageView = (ImageView) findViewById(R.id.oneproduct_img);
         TextView mpName = (TextView) findViewById(R.id.pname);
         TextView mpPrecio = (TextView) findViewById(R.id.pprecio);
@@ -35,7 +37,10 @@ public class OneProductActivity extends AppCompatActivity {
         Button mBtnPrecio = (Button) findViewById(R.id.btnprecio);
         mpPrecio.setText(p.getPrice());
         mpName.setText(p.getName());
-        mpDesc.setText(p.getShort_description());
+        setTitle(p.getName());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            mpDesc.setText(Html.fromHtml(p.getShort_description(), Html.FROM_HTML_MODE_COMPACT));
+        else mpDesc.setText(Html.fromHtml(p.getShort_description()));
         Picasso.with(getApplicationContext()).load(p.getImages()[0].getSrc()).into(mImageView);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
