@@ -12,5 +12,50 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tiendita.com.tienda.OneProductActivity"
     tools:showIn="@layout/activity_one_product">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/oneproduct_img"
+            android:src="@drawable/common_google_signin_btn_icon_dark"
+            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:contentDescription="img" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginStart="10dp"
+                android:text="name"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+            <TextView
+                android:id="@+id/precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="precio"
+                android:textAppearance="?attr/textAppearanceListItem" />
+            <Button
+                android:id="@+id/btnprecio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Añadir al carro" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

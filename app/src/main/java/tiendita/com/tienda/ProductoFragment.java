@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import tiendita.com.tienda.contents.ProductContent;
 import tiendita.com.tienda.entities.Product;
 
@@ -26,7 +28,7 @@ public class ProductoFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 2;
+    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -108,8 +110,11 @@ public class ProductoFragment extends Fragment {
 
         @Override
         public void onListFragmentInteraction(Product item) {
+            Gson gson = new Gson();
+            String resultado = gson.toJson(item);
             Intent i = new Intent(getActivity(),OneProductActivity.class);
-                    startActivity(i);
+            i.putExtra("producto",resultado);
+            startActivity(i);
         }
     }
 }

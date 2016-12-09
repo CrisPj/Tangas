@@ -1,7 +1,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true">
@@ -9,20 +9,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/product_img"
             android:src="@drawable/common_google_signin_btn_icon_dark"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:layout_width="150dp"
-            android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:contentDescription="img" />
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
