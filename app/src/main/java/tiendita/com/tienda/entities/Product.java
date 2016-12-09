@@ -14,26 +14,6 @@ public class Product {
         return average_rating;
     }
 
-    private java.lang.Integer[] related_ids;
-
-    public void setRelated_ids(java.lang.Integer[] related_ids) {
-        this.related_ids = related_ids;
-    }
-
-    public java.lang.Integer[] getRelated_ids() {
-        return related_ids;
-    }
-
-    private java.lang.Integer download_limit;
-
-    public void setDownload_limit(java.lang.Integer download_limit) {
-        this.download_limit = download_limit;
-    }
-
-    public java.lang.Integer getDownload_limit() {
-        return download_limit;
-    }
-
     private java.lang.Integer total_sales;
 
     public void setTotal_sales(java.lang.Integer total_sales) {
@@ -42,16 +22,6 @@ public class Product {
 
     public java.lang.Integer getTotal_sales() {
         return total_sales;
-    }
-
-    private java.lang.String price_html;
-
-    public void setPrice_html(java.lang.String price_html) {
-        this.price_html = price_html;
-    }
-
-    public java.lang.String getPrice_html() {
-        return price_html;
     }
 
     private java.lang.String date_modified;
@@ -74,16 +44,6 @@ public class Product {
         return catalog_visibility;
     }
 
-    private java.lang.Object[] grouped_products;
-
-    public void setGrouped_products(java.lang.Object[] grouped_products) {
-        this.grouped_products = grouped_products;
-    }
-
-    public java.lang.Object[] getGrouped_products() {
-        return grouped_products;
-    }
-
     private java.lang.Boolean featured;
 
     public void setFeatured(java.lang.Boolean featured) {
@@ -102,26 +62,6 @@ public class Product {
 
     public java.lang.Object getStock_quantity() {
         return stock_quantity;
-    }
-
-    private java.lang.String backorders;
-
-    public void setBackorders(java.lang.String backorders) {
-        this.backorders = backorders;
-    }
-
-    public java.lang.String getBackorders() {
-        return backorders;
-    }
-
-    private java.lang.Object[] cross_sell_ids;
-
-    public void setCross_sell_ids(java.lang.Object[] cross_sell_ids) {
-        this.cross_sell_ids = cross_sell_ids;
-    }
-
-    public java.lang.Object[] getCross_sell_ids() {
-        return cross_sell_ids;
     }
 
     private java.lang.Integer menu_order;
@@ -194,16 +134,6 @@ public class Product {
         return purchase_note;
     }
 
-    private java.lang.String download_type;
-
-    public void setDownload_type(java.lang.String download_type) {
-        this.download_type = download_type;
-    }
-
-    public java.lang.String getDownload_type() {
-        return download_type;
-    }
-
     private java.lang.String button_text;
 
     public void setButton_text(java.lang.String button_text) {
@@ -212,35 +142,6 @@ public class Product {
 
     public java.lang.String getButton_text() {
         return button_text;
-    }
-
-    private java.lang.Integer parent_id;
-
-    public void setParent_id(java.lang.Integer parent_id) {
-        this.parent_id = parent_id;
-    }
-
-    public java.lang.Integer getParent_id() {
-        return parent_id;
-    }
-    private java.lang.Boolean sold_individually;
-
-    public void setSold_individually(java.lang.Boolean sold_individually) {
-        this.sold_individually = sold_individually;
-    }
-
-    public java.lang.Boolean getSold_individually() {
-        return sold_individually;
-    }
-
-    private java.lang.Object[] variations;
-
-    public void setVariations(java.lang.Object[] variations) {
-        this.variations = variations;
-    }
-
-    public java.lang.Object[] getVariations() {
-        return variations;
     }
 
     private java.lang.String short_description;
@@ -282,303 +183,32 @@ public class Product {
     public java.lang.Boolean getPurchasable() {
         return purchasable;
     }
-
-    private java.lang.String tax_status;
-
-    public void setTax_status(java.lang.String tax_status) {
-        this.tax_status = tax_status;
-    }
-
-    public java.lang.String getTax_status() {
-        return tax_status;
-    }
-
     private java.lang.Boolean in_stock;
-
     public void setIn_stock(java.lang.Boolean in_stock) {
         this.in_stock = in_stock;
     }
-
     public java.lang.Boolean getIn_stock() {
         return in_stock;
     }
-
-    private java.lang.Object[] default_attributes;
-
-    public void setDefault_attributes(java.lang.Object[] default_attributes) {
-        this.default_attributes = default_attributes;
-    }
-
-    public java.lang.Object[] getDefault_attributes() {
-        return default_attributes;
-    }
-
-    private java.lang.String sku;
-
-    public void setSku(java.lang.String sku) {
-        this.sku = sku;
-    }
-
-    public java.lang.String getSku() {
-        return sku;
-    }
-
-    private java.lang.Boolean virtual;
-
-    public void setVirtual(java.lang.Boolean virtual) {
-        this.virtual = virtual;
-    }
-
-    public java.lang.Boolean getVirtual() {
-        return virtual;
-    }
-
-    private java.lang.Object[] attributes;
-
-    public void setAttributes(java.lang.Object[] attributes) {
-        this.attributes = attributes;
-    }
-
-    public java.lang.Object[] getAttributes() {
-        return attributes;
-    }
-
-    private java.lang.String sale_price;
-
-    public void setSale_price(java.lang.String sale_price) {
-        this.sale_price = sale_price;
-    }
-
-    public java.lang.String getSale_price() {
-        return sale_price;
-    }
-
-    private java.lang.Boolean downloadable;
-
-    public void setDownloadable(java.lang.Boolean downloadable) {
-        this.downloadable = downloadable;
-    }
-
-    public java.lang.Boolean getDownloadable() {
-        return downloadable;
-    }
-
-    private java.lang.String status;
-
-    public void setStatus(java.lang.String status) {
-        this.status = status;
-    }
-
-    public java.lang.String getStatus() {
-        return status;
-    }
-
-    private java.lang.String slug;
-
-    public void setSlug(java.lang.String slug) {
-        this.slug = slug;
-    }
-
-    public java.lang.String getSlug() {
-        return slug;
-    }
-
-    private java.lang.Boolean shipping_taxable;
-
-    public void setShipping_taxable(java.lang.Boolean shipping_taxable) {
-        this.shipping_taxable = shipping_taxable;
-    }
-
-    public java.lang.Boolean getShipping_taxable() {
-        return shipping_taxable;
-    }
-
-    private java.lang.Integer download_expiry;
-
-    public void setDownload_expiry(java.lang.Integer download_expiry) {
-        this.download_expiry = download_expiry;
-    }
-
-    public java.lang.Integer getDownload_expiry() {
-        return download_expiry;
-    }
-
     private java.lang.String price;
-
-    public void setPrice(java.lang.String price) {
-        this.price = price;
-    }
-
     public java.lang.String getPrice() {
         return price;
     }
-
-    private java.lang.Integer rating_count;
-
-    public void setRating_count(java.lang.Integer rating_count) {
-        this.rating_count = rating_count;
-    }
-
-    public java.lang.Integer getRating_count() {
-        return rating_count;
-    }
-
-    private java.lang.String permalink;
-
-    public void setPermalink(java.lang.String permalink) {
-        this.permalink = permalink;
-    }
-
-    public java.lang.String getPermalink() {
-        return permalink;
-    }
-
-    private java.lang.Boolean shipping_required;
-
-    public void setShipping_required(java.lang.Boolean shipping_required) {
-        this.shipping_required = shipping_required;
-    }
-
-    public java.lang.Boolean getShipping_required() {
-        return shipping_required;
-    }
-
-    private java.lang.Integer shipping_class_id;
-
-    public void setShipping_class_id(java.lang.Integer shipping_class_id) {
-        this.shipping_class_id = shipping_class_id;
-    }
-
-    public java.lang.Integer getShipping_class_id() {
-        return shipping_class_id;
-    }
-
-    private java.lang.Boolean reviews_allowed;
-
-    public void setReviews_allowed(java.lang.Boolean reviews_allowed) {
-        this.reviews_allowed = reviews_allowed;
-    }
-
-    public java.lang.Boolean getReviews_allowed() {
-        return reviews_allowed;
-    }
-
-    private java.lang.Boolean manage_stock;
-
-    public void setManage_stock(java.lang.Boolean manage_stock) {
-        this.manage_stock = manage_stock;
-    }
-
-    public java.lang.Boolean getManage_stock() {
-        return manage_stock;
-    }
-
-    private java.lang.String type;
-
-    public void setType(java.lang.String type) {
-        this.type = type;
-    }
-
-    public java.lang.String getType() {
-        return type;
-    }
-
-    private java.lang.String date_on_sale_from;
-
-    public void setDate_on_sale_from(java.lang.String date_on_sale_from) {
-        this.date_on_sale_from = date_on_sale_from;
-    }
-
-    public java.lang.String getDate_on_sale_from() {
-        return date_on_sale_from;
-    }
-
-    private java.lang.Boolean backorders_allowed;
-
-    public void setBackorders_allowed(java.lang.Boolean backorders_allowed) {
-        this.backorders_allowed = backorders_allowed;
-    }
-
-    public java.lang.Boolean getBackorders_allowed() {
-        return backorders_allowed;
-    }
-
-    private java.lang.Boolean on_sale;
-
-    public void setOn_sale(java.lang.Boolean on_sale) {
-        this.on_sale = on_sale;
-    }
-
-    public java.lang.Boolean getOn_sale() {
-        return on_sale;
-    }
-
-    private java.lang.String date_on_sale_to;
-
-    public void setDate_on_sale_to(java.lang.String date_on_sale_to) {
-        this.date_on_sale_to = date_on_sale_to;
-    }
-
-    public java.lang.String getDate_on_sale_to() {
-        return date_on_sale_to;
-    }
-
-    private java.lang.String external_url;
-
-    public void setExternal_url(java.lang.String external_url) {
-        this.external_url = external_url;
-    }
-
-    public java.lang.String getExternal_url() {
-        return external_url;
-    }
-
     private Image[] images;
-
-    public void setImages(Image[] images) {
-        this.images = images;
-    }
-
     public Image[] getImages() {
         return images;
     }
-
     private java.lang.Integer id;
-
     public void setId(java.lang.Integer id) {
         this.id = id;
     }
-
     public java.lang.Integer getId() {
         return id;
     }
-
-    private java.lang.Boolean backordered;
-
-    public void setBackordered(java.lang.Boolean backordered) {
-        this.backordered = backordered;
-    }
-
-    public java.lang.Boolean getBackordered() {
-        return backordered;
-    }
-
-    private java.lang.Object[] downloads;
-
-    public void setDownloads(java.lang.Object[] downloads) {
-        this.downloads = downloads;
-    }
-
-    public java.lang.Object[] getDownloads() {
-        return downloads;
-    }
-
     private java.lang.String description;
-
     public void setDescription(java.lang.String description) {
         this.description = description;
     }
-
     public java.lang.String getDescription() {
         return description;
     }

@@ -20,8 +20,8 @@
         <ImageView
             android:id="@+id/oneproduct_img"
             android:src="@drawable/common_google_signin_btn_icon_dark"
-            android:layout_height="100dp"
-            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_width="300dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:contentDescription="img" />
@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/pname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
@@ -45,7 +45,16 @@
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
-                android:id="@+id/precio"
+                android:id="@+id/pdesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginStart="10dp"
+                android:text="desc"
+                android:textAppearance="?attr/textAppearanceListItem" />
+            <TextView
+                android:id="@+id/pprecio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"

@@ -6,7 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -27,6 +29,13 @@ public class OneProductActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Product p = gson.fromJson(producto,Product.class);
         ImageView mImageView = (ImageView) findViewById(R.id.oneproduct_img);
+        TextView mpName = (TextView) findViewById(R.id.pname);
+        TextView mpPrecio = (TextView) findViewById(R.id.pprecio);
+        TextView mpDesc = (TextView) findViewById(R.id.pdesc);
+        Button mBtnPrecio = (Button) findViewById(R.id.btnprecio);
+        mpPrecio.setText(p.getPrice());
+        mpName.setText(p.getName());
+        mpDesc.setText(p.getShort_description());
         Picasso.with(getApplicationContext()).load(p.getImages()[0].getSrc()).into(mImageView);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
