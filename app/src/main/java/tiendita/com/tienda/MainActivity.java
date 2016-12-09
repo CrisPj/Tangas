@@ -99,15 +99,18 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (id) {
             case R.id.products:
                 ProductoFragment pf = new ProductoFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
                 ft.replace(R.id.fragment_container, pf);
                 ft.commit();
                 break;
             default:
+                LoginFragment lf = new LoginFragment();
+                ft.replace(R.id.fragment_container, lf);
+                ft.commit();
                 break;
         }
 

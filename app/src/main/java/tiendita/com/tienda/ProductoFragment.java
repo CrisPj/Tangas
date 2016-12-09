@@ -1,6 +1,7 @@
 package tiendita.com.tienda;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -107,7 +108,8 @@ public class ProductoFragment extends Fragment {
 
         @Override
         public void onListFragmentInteraction(Product item) {
-            Toast.makeText(getContext(), "SHieet", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(getActivity(),OneProductActivity.class);
+                    startActivity(i);
         }
     }
 }
