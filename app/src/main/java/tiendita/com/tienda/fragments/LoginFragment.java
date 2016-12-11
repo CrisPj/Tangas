@@ -16,30 +16,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import tiendita.com.tienda.R;
+import tiendita.com.tienda.api.LoginAPI;
+import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.entities.UserData;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
     public static final String KEY_USERNAME="username";
     public static final String KEY_PASSWORD="password";
-    private String url = "https://tangaweb-cresh.rhcloud.com/auth_users.php";
 
     private OnFragmentInteractionListener mListener;
-    private RequestQueue tarea;
     private String session;
     private TextView txtUser;
     private TextView txtPass;
@@ -69,7 +61,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Button upButton = (Button) view.findViewById(R.id.email_sign_in_button);
         txtUser = (TextView) view.findViewById(R.id.user);
         txtPass = (TextView) view.findViewById(R.id.password);
-        tarea = Volley.newRequestQueue(this.getContext());
          mLoginFormView = (View) view.findViewById(R.id.login_form);
         mProgressView = view.findViewById(R.id.login_progress);
         upButton.setOnClickListener(this);
@@ -79,12 +70,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -123,61 +108,49 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             cancel = true;
         }
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             showProgress(true);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            //todo check
-                            Gson gson = new Gson();
-                            UserData user = gson.fromJson(response, UserData.class);
-                            if(Objects.equals(user.getValido(), "true")){
-                                openProfile(response);
-                                Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
-                            }else{
-                                //error
-                                showProgress(false);
-                                //mUserText.setError(getString(R.string.error_field_required));
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG ).show();
-                        }
-                    }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> map = new HashMap<String,String>();
-                    map.put(KEY_USERNAME,user);
-                    map.put(KEY_PASSWORD,pass);
-                    return map;
-                }
-            };
 
-            RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
-            requestQueue.add(stringRequest);
+            LoginAPI login = ServiceGenerator.createAuthenticatedService(LoginAPI.class,getContext());
+            HashMap<String,String> params = new HashMap<String,String>();
+                                params.put(KEY_USERNAME,user);
+                                params.put(KEY_PASSWORD,pass);
+            login.login(params).enqueue(new Callback<UserData>() {
+                @Override
+                public void onResponse(Call<UserData> call, retrofit2.Response<UserData> response) {
+                    //todo check
+                    UserData user = response.body();
+                    if (Objects.equals(user.getValido(), "true")) {
+                        openProfile(user);
+                    } else {
+                        //error
+                        showProgress(false);
+                        Toast.makeText(getContext(),"Usuario ó password incorrectos",Toast.LENGTH_LONG).show();
+                        //mUserText.setError(getString(R.string.error_field_required));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserData> call, Throwable t) {
+
+                }
+            });
         }
     }
 
-    private void openProfile(String response)
+    private void openProfile(UserData user)
     {
-        Gson gson = new Gson();
-        UserData user = gson.fromJson(response,UserData.class);
-        if (user.getRol().equals("adminstrador"))
+        String rol = user.getRol();
+        if (rol.equals("administrador"))
         {
             //administrador
+            Toast.makeText(getContext(),"Eres admin",Toast.LENGTH_LONG).show();
         }
         else
         {
             //usernormal
+            Toast.makeText(getContext(),"Eres un user silvestre",Toast.LENGTH_LONG).show();
         }
     }
 
