@@ -16,7 +16,7 @@ import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
 import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
 import tiendita.com.tienda.contents.ProductsContent;
-import tiendita.com.tienda.entities.Product;
+import tiendita.com.tienda.pojo.Product;
 
 /**
  * Created by zero_ on 11/12/2016.
@@ -24,30 +24,36 @@ import tiendita.com.tienda.entities.Product;
 
 public class ProductsFragment extends Fragment {
 
+    private static final String ARG_COLUMN_COUNT = "column-count";
     private ProductsContent content;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private ProductInteractionListener mListener;
     private ProductRecyclerViewAdapter adapter;
+    private int mColumnCount;
 
     public ProductsFragment() {
     }
 
-    public static ProductsFragment newInstance() {
+    public static ProductsFragment newInstance(int itemCount) {
         ProductsFragment fragment = new ProductsFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, itemCount);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_producto_list, container, false);
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             final Context context = view.getContext();
@@ -59,6 +65,18 @@ public class ProductsFragment extends Fragment {
             //recyclerView.addOnScrollListener(createInfiniteScrollListener());
         }
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = new ProductInteractionListener();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     /**

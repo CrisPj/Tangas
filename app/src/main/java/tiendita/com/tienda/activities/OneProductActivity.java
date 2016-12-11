@@ -11,13 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import tiendita.com.tienda.R;
-import tiendita.com.tienda.entities.Product;
+import tiendita.com.tienda.pojo.Product;
 
 public class OneProductActivity extends AppCompatActivity {
 
@@ -37,12 +36,12 @@ public class OneProductActivity extends AppCompatActivity {
         TextView mpDesc = (TextView) findViewById(R.id.pdesc);
         Button mBtnPrecio = (Button) findViewById(R.id.btnprecio);
         mpPrecio.setText(p.getPrice());
-        mpName.setText(p.getName());
-        setTitle(p.getName());
+        mpName.setText(p.getTitle());
+        setTitle(p.getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            mpDesc.setText(Html.fromHtml(p.getShort_description(), Html.FROM_HTML_MODE_COMPACT));
-        else mpDesc.setText(Html.fromHtml(p.getShort_description()));
-        Picasso.with(getApplicationContext()).load(p.getImages()[0].getSrc()).into(mImageView);
+            mpDesc.setText(Html.fromHtml(p.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+        else mpDesc.setText(Html.fromHtml(p.getShortDescription()));
+        //Picasso.with(getApplicationContext()).load(p.getImages()[0].getSrc()).into(mImageView);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,14 +2,15 @@ package tiendita.com.tienda.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import tiendita.com.tienda.R;
-import tiendita.com.tienda.entities.Product;
 import tiendita.com.tienda.fragments.ProductsFragment;
+import tiendita.com.tienda.pojo.Product;
 import tiendita.com.tienda.pojo.Products;
 
 /**
@@ -19,23 +20,45 @@ import tiendita.com.tienda.pojo.Products;
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
     private Products products;
-    private ProductsFragment.ProductInteractionListener listener;
+    private ProductsFragment.ProductInteractionListener mListener;
     private Context context;
 
     public ProductRecyclerViewAdapter(Products products, ProductsFragment.ProductInteractionListener mListener, Context context) {
         this.products = products;
-        this.listener = mListener;
+        this.mListener = mListener;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_producto, parent, false);
+        return new ProductRecyclerViewAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
+        Product product = products.getProduct(position);
+
+        holder.mItem = products.getProduct(position);
+        holder.mIdView.setText("" + holder.mItem.getId());
+
+        holder.mContentView.setText(product.getTitle());
+        //List<tiendita.com.tienda.pojo.Image> images = product.getImages();
+        //if (images.length > 0)
+        //  Picasso.with(context).load(images[0].getSrc()).into(holder.mImageView);
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onListFragmentInteraction(holder.mItem);
+                }
+            }
+        });
     }
 
     @Override
@@ -48,7 +71,8 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         public final TextView mIdView;
         public final TextView mContentView;
         public final ImageView mImageView;
-        public Product mItem;
+        public tiendita.com.tienda.pojo.Product mItem;
+
         public ViewHolder(View view) {
 
             super(view);
