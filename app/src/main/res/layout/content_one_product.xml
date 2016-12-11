@@ -5,66 +5,65 @@
     android:id="@+id/content_one_product"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tiendita.com.tienda.activities.OneProductActivity"
     tools:showIn="@layout/activity_one_product">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/oneproduct_img"
-            android:src="@drawable/common_google_signin_btn_icon_dark"
-            android:layout_height="250dp"
-            android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:contentDescription="img" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/pname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:textColor="?attr/colorPrimary"
-                android:layout_marginStart="10dp"
-                android:text="name"
-                android:textAppearance="?attr/textAppearanceListItem" />
+            <ImageView
+                android:id="@+id/oneproduct_img"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:contentDescription="img"
+                android:scaleType="centerCrop"
+                android:src="@drawable/common_google_signin_btn_icon_dark" />
 
-            <TextView
-                android:id="@+id/pdesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:textColor="?attr/colorPrimary"
-                android:layout_marginStart="10dp"
-                android:text="desc"
-                android:textAppearance="?attr/textAppearanceListItem" />
-            <TextView
-                android:id="@+id/pprecio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:text="precio"
-                android:textAppearance="?attr/textAppearanceListItem" />
-            <Button
-                android:id="@+id/btnprecio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Añadir al carro" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/pname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:layout_marginStart="10dp"
+                    android:text="name"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:textColor="?attr/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/pdesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:layout_marginStart="10dp"
+                    android:text="desc"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:textColor="?attr/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/pprecio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="precio"
+                    android:textAppearance="?attr/textAppearanceListItem" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </ScrollView>
 </RelativeLayout>

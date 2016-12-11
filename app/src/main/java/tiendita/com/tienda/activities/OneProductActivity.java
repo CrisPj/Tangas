@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,14 +33,13 @@ public class OneProductActivity extends AppCompatActivity {
         TextView mpName = (TextView) findViewById(R.id.pname);
         TextView mpPrecio = (TextView) findViewById(R.id.pprecio);
         TextView mpDesc = (TextView) findViewById(R.id.pdesc);
-        Button mBtnPrecio = (Button) findViewById(R.id.btnprecio);
         mpPrecio.setText(p.getPrice());
         mpName.setText(p.getTitle());
         setTitle(p.getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            mpDesc.setText(Html.fromHtml(p.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
-        else mpDesc.setText(Html.fromHtml(p.getShortDescription()));
-        //Picasso.with(getApplicationContext()).load(p.getImages()[0].getSrc()).into(mImageView);
+            mpDesc.setText(Html.fromHtml(p.getDescription(), Html.FROM_HTML_MODE_COMPACT));
+        else mpDesc.setText(Html.fromHtml(p.getDescription()));
+        Picasso.with(getApplicationContext()).load(p.getImages().get(0).getSrc()).into(mImageView);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

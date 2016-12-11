@@ -4,19 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
 import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
-import tiendita.com.tienda.contents.ProductsContent;
+import tiendita.com.tienda.api.ProductsAPI;
+import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.pojo.Product;
+import tiendita.com.tienda.pojo.Products;
 
 /**
  * Created by zero_ on 11/12/2016.
@@ -25,14 +33,36 @@ import tiendita.com.tienda.pojo.Product;
 public class ProductsFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private ProductsContent content;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private ProductInteractionListener mListener;
     private ProductRecyclerViewAdapter adapter;
     private int mColumnCount;
+    private Products products;
 
     public ProductsFragment() {
+    }
+
+    public static void replaceFragment(final FragmentTransaction ft, final Context context, final ProgressBar requestProgress) {
+        requestProgress.setVisibility(View.VISIBLE);
+        // Retrieve products
+        ProductsAPI api = ServiceGenerator.createAuthenticatedService(ProductsAPI.class, context);
+        api.listProducts().enqueue(new Callback<Products>() {
+            @Override
+            public void onResponse(Call<Products> call, Response<Products> response) {
+                requestProgress.setVisibility(View.GONE);
+                ProductsFragment pf = new ProductsFragment();
+                pf.setProducts(response.body());
+                ft.replace(R.id.fragment_container, pf);
+                ft.commit();
+            }
+
+            @Override
+            public void onFailure(Call<Products> call, Throwable t) {
+                requestProgress.setVisibility(View.GONE);
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public static ProductsFragment newInstance(int itemCount) {
@@ -60,7 +90,7 @@ public class ProductsFragment extends Fragment {
             recyclerView = (RecyclerView) view;
             mLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(mLayoutManager);
-            adapter = new ProductRecyclerViewAdapter(content.products, mListener, context);
+            adapter = new ProductRecyclerViewAdapter(products, mListener, context);
             recyclerView.setAdapter(adapter);
             //recyclerView.addOnScrollListener(createInfiniteScrollListener());
         }
@@ -77,6 +107,10 @@ public class ProductsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void setProducts(Products products) {
+        this.products = products;
     }
 
     /**
