@@ -7,7 +7,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -142,16 +144,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void openProfile(UserData user)
     {
         String rol = user.getRol();
-        if (rol.equals("administrador"))
-        {
-            //administrador
-            Toast.makeText(getContext(),"Eres admin",Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            //usernormal
-            Toast.makeText(getContext(),"Eres un user silvestre",Toast.LENGTH_LONG).show();
-        }
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        navigationView.getMenu().clear();
+        navigationView.inflateMenu(rol.equals("administrator") ? R.menu.activity_main_drawer_admin : R.menu.activity_main_drawer_silvestre);
+        showProgress(false);
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, new ProfileFragment());
+        ft.commit();
     }
 
 
