@@ -1,4 +1,4 @@
-package tiendita.com.tienda;
+package tiendita.com.tienda.activities;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import tiendita.com.tienda.R;
 import tiendita.com.tienda.entities.Product;
 
 public class OneProductActivity extends AppCompatActivity {

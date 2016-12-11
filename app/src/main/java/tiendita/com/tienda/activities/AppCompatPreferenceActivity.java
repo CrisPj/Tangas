@@ -1,4 +1,4 @@
-package tiendita.com.tienda;
+package tiendita.com.tienda.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

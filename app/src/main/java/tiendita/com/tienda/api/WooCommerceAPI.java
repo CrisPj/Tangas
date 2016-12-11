@@ -30,7 +30,7 @@ public class WooCommerceAPI {
         String consumer_key = preferences.getString("consumer_key", "");
         String consumer_secret = preferences.getString("consumer_secret", "");
         // Creates new request object with given parameters
-        requestTask = new APIRequestTask(context, consumer_key, consumer_secret);
+       requestTask = new APIRequestTask(context, consumer_key, consumer_secret);
     }
 
     private String fetch(String request) throws ExecutionException, InterruptedException, JSONException {
@@ -41,6 +41,14 @@ public class WooCommerceAPI {
 
     public Product[] fetchAllProducts() throws InterruptedException, ExecutionException, JSONException {
         String jsonResponse = fetch("wp-json/wc/v1/products");
+        Gson gson = new Gson();
+        Product[] products = new Product[0];
+        products = gson.fromJson(jsonResponse, products.getClass());
+        return products;
+    }
+
+    public Product[] fetchProducts(int totalItemCount) throws InterruptedException, ExecutionException, JSONException {
+        String jsonResponse = fetch("wp-json/wc/v1/products?offset="+totalItemCount);
         Gson gson = new Gson();
         Product[] products = new Product[0];
         products = gson.fromJson(jsonResponse, products.getClass());

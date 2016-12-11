@@ -1,7 +1,6 @@
-package tiendita.com.tienda;
+package tiendita.com.tienda.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,25 +10,24 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import tiendita.com.tienda.ProductoFragment.OnListFragmentInteractionListener;
+import tiendita.com.tienda.R;
+import tiendita.com.tienda.fragments.ProductosFragment.OnListFragmentInteractionListener;
 import tiendita.com.tienda.entities.Image;
 import tiendita.com.tienda.entities.Product;
-
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Product} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyProductoRecyclerViewAdapter extends RecyclerView.Adapter<MyProductoRecyclerViewAdapter.ViewHolder> {
+public class ProductoRecyclerViewAdapter extends RecyclerView.Adapter<ProductoRecyclerViewAdapter.ViewHolder> {
 
     private final Product[] mValues;
     private final OnListFragmentInteractionListener mListener;
 
     Context context;
 
-    public MyProductoRecyclerViewAdapter(Product[] items, OnListFragmentInteractionListener listener, Context context) {
+    public ProductoRecyclerViewAdapter(Product[] items, OnListFragmentInteractionListener listener, Context context) {
         mValues = items;
         this.context = context;
         mListener = listener;
@@ -67,6 +65,10 @@ public class MyProductoRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
     @Override
     public int getItemCount() {
         return mValues.length;
+    }
+
+    public void DataChanged() {
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

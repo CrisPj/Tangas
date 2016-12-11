@@ -1,4 +1,4 @@
-package tiendita.com.tienda;
+package tiendita.com.tienda.activities;
 
 
 import android.annotation.TargetApi;
@@ -22,6 +22,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 
 import java.util.List;
+
+import tiendita.com.tienda.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

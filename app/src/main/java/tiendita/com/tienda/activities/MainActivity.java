@@ -1,4 +1,4 @@
-package tiendita.com.tienda;
+package tiendita.com.tienda.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -21,8 +21,9 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import tiendita.com.tienda.contents.ProductContent;
-import tiendita.com.tienda.entities.Product;
+import tiendita.com.tienda.R;
+import tiendita.com.tienda.fragments.LoginFragment;
+import tiendita.com.tienda.fragments.ProductosFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,8 +103,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (id) {
             case R.id.products:
-                ProductoFragment pf = new ProductoFragment();
-
+                ProductosFragment pf = new ProductosFragment();
                 ft.replace(R.id.fragment_container, pf);
                 ft.commit();
                 break;
