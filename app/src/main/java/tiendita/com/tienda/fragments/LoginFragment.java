@@ -124,6 +124,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             HashMap<String, String> params = new HashMap<String, String>();
             params.put(KEY_USERNAME, user);
             params.put(KEY_PASSWORD, pass);
+            params.put("alv","true");
             login.login(params).enqueue(new Callback<UserData>() {
                 @Override
                 public void onResponse(Call<UserData> call, retrofit2.Response<UserData> response) {
@@ -135,7 +136,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         // Crear mapa de valores
                         ContentValues values = new ContentValues();
                         values.put(UserdataContract.Userdata._ID, user.getId());
-                        values.put(UserdataContract.Userdata.COLUMN_NAME_EMAIL, "root@1337.com");
+                        values.put(UserdataContract.Userdata.COLUMN_NAME_EMAIL, user.getUser().getEmail());
                         values.put(UserdataContract.Userdata.COLUMN_NAME_USERNAME, user.getNombre_completo());
                         // Save
                         db.insert(UserdataContract.Userdata.TABLE_NAME, null, values);
