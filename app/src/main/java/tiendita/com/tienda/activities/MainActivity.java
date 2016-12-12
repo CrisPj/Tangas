@@ -109,6 +109,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.products:
                 ProductsFragment.replaceFragment(ft, getApplicationContext(), requestProgress);
                 break;
+            case R.id.logout:
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.activity_main_drawer);
+                break;
             default:
                 LoginFragment lf = new LoginFragment();
                 ft.replace(R.id.fragment_container, lf);

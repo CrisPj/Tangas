@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+        android:id="@+id/products"
+        android:icon="@drawable/ic_view_list_black_24dp"
+        android:title="@string/menu_products" />
+        <item
+            android:id="@+id/orders"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="@string/menu_orders" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="@string/menu_settings" />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_logout" />
+    </group>
+
+</menu>
