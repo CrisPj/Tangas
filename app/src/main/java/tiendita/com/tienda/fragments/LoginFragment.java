@@ -3,7 +3,9 @@ package tiendita.com.tienda.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,12 +29,15 @@ import tiendita.com.tienda.R;
 import tiendita.com.tienda.api.LoginAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.entities.UserData;
+import tiendita.com.tienda.sqlite.contracts.UserdataContract;
+import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
-    public static final String KEY_USERNAME="username";
-    public static final String KEY_PASSWORD="password";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
 
+    private UserdataDbHelper userdataDbHelper;
     private OnFragmentInteractionListener mListener;
     private String session;
     private TextView txtUser;
@@ -53,6 +58,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userdataDbHelper = new UserdataDbHelper(getContext());
     }
 
     @Override
@@ -63,7 +69,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Button upButton = (Button) view.findViewById(R.id.email_sign_in_button);
         txtUser = (TextView) view.findViewById(R.id.user);
         txtPass = (TextView) view.findViewById(R.id.password);
-         mLoginFormView = (View) view.findViewById(R.id.login_form);
+        mLoginFormView = (View) view.findViewById(R.id.login_form);
         mProgressView = view.findViewById(R.id.login_progress);
         upButton.setOnClickListener(this);
         return view;
@@ -114,21 +120,31 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         } else {
             showProgress(true);
 
-            LoginAPI login = ServiceGenerator.createAuthenticatedService(LoginAPI.class,getContext());
-            HashMap<String,String> params = new HashMap<String,String>();
-                                params.put(KEY_USERNAME,user);
-                                params.put(KEY_PASSWORD,pass);
+            LoginAPI login = ServiceGenerator.createAuthenticatedService(LoginAPI.class, getContext());
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put(KEY_USERNAME, user);
+            params.put(KEY_PASSWORD, pass);
             login.login(params).enqueue(new Callback<UserData>() {
                 @Override
                 public void onResponse(Call<UserData> call, retrofit2.Response<UserData> response) {
                     //todo check
                     UserData user = response.body();
                     if (Objects.equals(user.getValido(), "true")) {
+                        // Agregar datos al SQLite
+                        SQLiteDatabase db = userdataDbHelper.getWritableDatabase();
+                        // Crear mapa de valores
+                        ContentValues values = new ContentValues();
+                        values.put(UserdataContract.Userdata._ID, user.getId());
+                        values.put(UserdataContract.Userdata.COLUMN_NAME_EMAIL, "root@1337.com");
+                        values.put(UserdataContract.Userdata.COLUMN_NAME_USERNAME, user.getNombre_completo());
+                        // Save
+                        db.insert(UserdataContract.Userdata.TABLE_NAME, null, values);
+
                         openProfile(user);
                     } else {
                         //error
                         showProgress(false);
-                        Toast.makeText(getContext(),"Usuario ó password incorrectos",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Usuario ó password incorrectos", Toast.LENGTH_LONG).show();
                         //mUserText.setError(getString(R.string.error_field_required));
                     }
                 }
@@ -141,8 +157,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void openProfile(UserData user)
-    {
+    private void openProfile(UserData user) {
         String rol = user.getRol();
         NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
@@ -191,8 +206,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         return password.length() > 4;
     }
 
-        public interface OnFragmentInteractionListener {
-            // TODO: Update argument type and name
-            void onFragmentInteraction(Uri uri);
-        }
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
+}
