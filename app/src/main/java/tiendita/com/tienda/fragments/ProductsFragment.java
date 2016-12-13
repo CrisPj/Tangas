@@ -3,7 +3,6 @@ package tiendita.com.tienda.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,17 +32,12 @@ import tiendita.com.tienda.pojo.Product;
  * Created by zero_ on 11/12/2016.
  */
 
-public class ProductsFragment extends Fragment {
+public class ProductsFragment extends CustomFragment
+{
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private View progressContainer;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager mLayoutManager;
-    private ProductInteractionListener mListener;
-    private ProductRecyclerViewAdapter adapter;
-    private int mColumnCount;
-    private int offset = 0;
     private Product[] products;
+    private ProductsFragment.ProductInteractionListener mListener;
+    private ProductRecyclerViewAdapter adapter;
 
     public ProductsFragment() {
     }
@@ -52,14 +46,6 @@ public class ProductsFragment extends Fragment {
         ProductsFragment pf = new ProductsFragment();
         ft.replace(R.id.fragment_container, pf);
         ft.commit();
-    }
-
-    public static ProductsFragment newInstance(int itemCount) {
-        ProductsFragment fragment = new ProductsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, itemCount);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -87,9 +73,6 @@ public class ProductsFragment extends Fragment {
 
             }
         });
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -97,20 +80,20 @@ public class ProductsFragment extends Fragment {
         View view = inflater.inflate(R.layout.recycler, container, false);
         progressContainer = view.findViewById(R.id.progressContainer);
         final Context context = view.getContext();
-        recyclerView = (RecyclerView) view.findViewById(R.id.productsRecyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.RecyclerView);
         mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
         return view;
     }
 
-    private void loadNextDataFromApi(int page) {
+    void loadNextDataFromApi(int page) {
         ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
         Map<String, String> params = new HashMap<>();
         params.put("offset", "" + (offset += 10));
         api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
             @Override
             public void onResponse(Call<Product[]> call, Response<Product[]> response) {
-                products = (concat(response.body()));
+                products = (concat(products,response.body()));
                 adapter.setProducts(products);
                 adapter.notifyDataSetChanged();
             }
@@ -120,15 +103,6 @@ public class ProductsFragment extends Fragment {
                 Toast.makeText(getContext(), "No hay mas products", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private Product[] concat(Product[] b) {
-        int bLen = b.length;
-        int aLen = products.length;
-        Product[] c = new Product[aLen + bLen];
-        System.arraycopy(products, 0, c, 0, aLen);
-        System.arraycopy(b, 0, c, aLen, bLen);
-        return c;
     }
 
     @Override
@@ -146,24 +120,11 @@ public class ProductsFragment extends Fragment {
     public void setProducts(Product[] products) {
         this.products = products;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Product item);
     }
-
     public class ProductInteractionListener implements OnListFragmentInteractionListener {
-
         @Override
         public void onListFragmentInteraction(Product item) {
             Gson gson = new Gson();

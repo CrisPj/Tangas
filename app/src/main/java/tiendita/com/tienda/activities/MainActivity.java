@@ -137,15 +137,15 @@ public class MainActivity extends AppCompatActivity
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
                 break;
             case R.id.coupons:
-                CouponsFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "CP");
+                CouponsFragment.replaceFragment(ft, "CP");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.clients:
-                UsersFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "UP");
+                UsersFragment.replaceFragment(ft, "UP");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.orders:
-                OrdersFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "OF");
+                OrdersFragment.replaceFragment(ft, "OF");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.reportes:

@@ -46,88 +46,67 @@ import tiendita.com.tienda.pojo.Product;
  * Created by zero_ on 11/12/2016.
  */
 
-public class OrdersFragment extends Fragment {
+public class OrdersFragment extends CustomFragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private RecyclerView recyclerView;
-    private LinearLayoutManager mLayoutManager;
     private OrderInteractionListener mListener;
     private OrderRecyclerViewAdapter adapter;
-    private int mColumnCount;
-    private int offset = 0;
     private Order[] orders;
 
     public OrdersFragment() {
     }
 
-    public static void replaceFragment(final FragmentTransaction ft, final Context context, final ProgressBar requestProgress, final String tag) {
-        requestProgress.setVisibility(View.VISIBLE);
-        // Retrieve products
-        OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, context);
-        api.listOrders().enqueue(new Callback<Order[]>() {
-            @Override
-            public void onResponse(Call<Order[]> call, Response<Order[]> response) {
-                requestProgress.setVisibility(View.GONE);
-                OrdersFragment pf = new OrdersFragment();
-                pf.setOrders(response.body());
-                ft.replace(R.id.fragment_container, pf,tag);
-                ft.commit();
-            }
-
-            @Override
-            public void onFailure(Call<Order[]> call, Throwable t) {
-                requestProgress.setVisibility(View.GONE);
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
-            }
-        });
+    public static void replaceFragment(final FragmentTransaction ft, final String tag) {
+        OrdersFragment pf = new OrdersFragment();
+        ft.replace(R.id.fragment_container, pf,tag);
+        ft.commit();
     }
 
-    public static OrdersFragment newInstance(int itemCount) {
-        OrdersFragment fragment = new OrdersFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, itemCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
+        api.listOrders().enqueue(new Callback<Order[]>() {
+            @Override
+            public void onResponse(Call<Order[]> call, Response<Order[]> response) {
+                orders = response.body();
+                adapter = new OrderRecyclerViewAdapter(orders, mListener, getContext());
+                recyclerView.setAdapter(adapter);
+                EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                        loadNextDataFromApi(page);
+                    }
+                };
+                recyclerView.addOnScrollListener(scrollListener);
+                progressContainer.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Order[]> call, Throwable t) {
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler, container, false);
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            final Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            mLayoutManager = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(mLayoutManager);
-            adapter = new OrderRecyclerViewAdapter(orders, mListener, context);
-            recyclerView.setAdapter(adapter);
-            EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
-                @Override
-                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                    loadNextDataFromApi(page);
-                }
-            };
-            recyclerView.addOnScrollListener(scrollListener);
-        }
+        progressContainer = view.findViewById(R.id.progressContainer);
+        final Context context = view.getContext();
+        recyclerView = (RecyclerView) view.findViewById(R.id.RecyclerView);
+        mLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(mLayoutManager);
         return view;
     }
 
-    private void loadNextDataFromApi(int page) {
+    void loadNextDataFromApi(int page) {
         Map<String, String> params = new HashMap<>();
         params.put("offset",""+(offset+=10));
         OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
         api.listOrders().enqueue(new Callback<Order[]>() {
             @Override
             public void onResponse(Call<Order[]> call, Response<Order[]> response) {
-                orders = (concat(response.body()));
+                orders = (concat(orders,response.body()));
                 adapter.setOrders(orders);
                 adapter.notifyDataSetChanged();
             }
@@ -138,15 +117,6 @@ public class OrdersFragment extends Fragment {
             }
         });
     }
-
-    private Order[] concat(Order[] b) {
-                int bLen = b.length;
-                int aLen = orders.length;
-                Order[] c= new Order[aLen+bLen];
-                System.arraycopy(orders, 0, c, 0, aLen);
-                System.arraycopy(b, 0, c, aLen, bLen);
-                return c;
-            }
 
     @Override
     public void onAttach(Context context) {
@@ -199,7 +169,7 @@ public class OrdersFragment extends Fragment {
                     @Override
                     public void onResponse(Call<Order> call, Response<Order> response) {
                         Toast.makeText(getContext(),"Creado correctamente",Toast.LENGTH_LONG).show();
-                        orders = (concat(response.body()));
+                        orders = (concat(orders,response.body()));
                         ((OrderRecyclerViewAdapter)adapter).setOrders(orders);
                         ((OrderRecyclerViewAdapter)adapter).notifyDataSetChanged();
                     }
@@ -214,15 +184,6 @@ public class OrdersFragment extends Fragment {
 
         alert.setNegativeButton("Cancel",null);
         alert.show();
-    }
-
-    private Order[] concat(Order b)
-    {
-        int aLen = orders.length;
-        Order[] c= new Order[aLen+1];
-        System.arraycopy(orders, 0, c, 0, aLen);
-        c[aLen] = b;
-        return c;
     }
 
     /**

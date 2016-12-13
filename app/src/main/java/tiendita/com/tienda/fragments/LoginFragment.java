@@ -39,7 +39,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private UserdataDbHelper userdataDbHelper;
     private OnFragmentInteractionListener mListener;
-    private String session;
     private TextView txtUser;
     private TextView txtPass;
 
@@ -48,11 +47,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     public LoginFragment() {
         // Required empty public constructor
-    }
-
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
-        return fragment;
     }
 
     @Override
