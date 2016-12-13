@@ -1,6 +1,7 @@
 package tiendita.com.tienda.activities;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,9 +28,11 @@ import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
 import tiendita.com.tienda.pojo.Coupons;
+import tiendita.com.tienda.sqlite.contracts.UserdataContract;
+import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity
      */
     private GoogleApiClient client;
     private ProgressBar requestProgress;
+    private UserdataDbHelper userdataDbHelper;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +50,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,6 +63,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -110,16 +110,20 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.products:
                 ProductsFragment.replaceFragment(ft, getApplicationContext(), requestProgress);
+                setFabIcon(R.drawable.ic_add_shopping_cart_black_24dp);
                 break;
             case R.id.logout:
+                fab.hide();
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
                 break;
             case R.id.coupons:
-                CouponsFragment.replaceFragment(ft, getApplicationContext(), requestProgress);
+                CouponsFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "CP");
+                setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             default:
+                fab.hide();
                 LoginFragment lf = new LoginFragment();
                 ft.replace(R.id.fragment_container, lf);
                 ft.commit();
@@ -170,5 +174,39 @@ public class MainActivity extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    private void setFabIcon(final int resId) {
+        fab.show();
+        fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+            @Override
+            public void onHidden(FloatingActionButton fab) {
+                fab.setImageResource(resId);
+                fab.show();
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        android.support.v4.app.Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+        String tag = "";
+        if (currentFragment != null)
+        {
+            tag = currentFragment.getTag();
+        }
+        if (tag == null) // jacky
+            tag = "";
+            switch (tag) {
+                case "CP":
+                    ((CouponsFragment)currentFragment).addCoupon();
+                    break;
+                default:
+                    Snackbar.make(view, "Not sure what to do...my bad", Snackbar.LENGTH_SHORT).show();
+                    break;
+            }
+
+
     }
 }

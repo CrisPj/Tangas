@@ -3,7 +3,6 @@ package tiendita.com.tienda.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,14 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.github.pwittchen.infinitescroll.library.InfiniteScrollListener;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -29,12 +23,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
+import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
 import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
 import tiendita.com.tienda.api.ProductsAPI;
 import tiendita.com.tienda.api.ProductsOffsetAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.pojo.Product;
-import tiendita.com.tienda.pojo.Products;
 
 /**
  * Created by zero_ on 11/12/2016.
@@ -103,34 +97,35 @@ public class ProductsFragment extends Fragment {
             recyclerView.setLayoutManager(mLayoutManager);
             adapter = new ProductRecyclerViewAdapter(products, mListener, context);
             recyclerView.setAdapter(adapter);
-            recyclerView.addOnScrollListener(createInfiniteScrollListener());
+            EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadNextDataFromApi(page);
+                }
+            };
+            recyclerView.addOnScrollListener(scrollListener);
         }
         return view;
     }
 
-    @NonNull
-    private InfiniteScrollListener createInfiniteScrollListener() {
-            return new InfiniteScrollListener(9, mLayoutManager) {
-                @Override public void onScrolledToEnd(final int firstVisibleItemPosition) {
-                     ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
-                    Map<String, String> params = new HashMap<>();
-                    params.put("offset",""+(offset+=10));
-                    api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
-                        @Override
-                        public void onResponse(Call<Product[]> call, Response<Product[]> response) {
-                            products = (concat(response.body()));
-                            refreshView(recyclerView, new ProductRecyclerViewAdapter(products, mListener, getContext()), firstVisibleItemPosition);
-                        }
+    private void loadNextDataFromApi(int page) {
+        ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
+        Map<String, String> params = new HashMap<>();
+        params.put("offset",""+(offset+=10));
+        api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
+            @Override
+            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
+                products = (concat(response.body()));
+                adapter.setProducts(products);
+                adapter.notifyDataSetChanged();
+            }
 
-                        @Override
-                        public void onFailure(Call<Product[]> call, Throwable t) {
-                            Toast.makeText(getContext(),"No hay mas products",Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            };
-        }
-
+            @Override
+            public void onFailure(Call<Product[]> call, Throwable t) {
+                Toast.makeText(getContext(),"No hay mas products",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     private Product[] concat(Product[] b) {
                 int bLen = b.length;

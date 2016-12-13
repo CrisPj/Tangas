@@ -3,6 +3,8 @@ package tiendita.com.tienda.pojo;
 
 public class Coupons {
 	private java.lang.String code;
+	private String amount;
+	private String discountType;
 	public java.lang.String getCode() {
 		return code;
 	}
@@ -18,4 +20,19 @@ public class Coupons {
 		return id;
 	}
 
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setDiscountType() {
+		this.discountType = "percent";
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
 }

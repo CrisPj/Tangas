@@ -12,11 +12,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TableRow>
                     <TextView
                         android:text="Coupon:"
@@ -25,7 +23,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         />
-
                     <TextView
                         android:id="@+id/txtCoupon"
                         android:textStyle="bold"
@@ -33,10 +30,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         />
-
                 </TableRow>
-
-
+                <TableRow>
+                    <TextView
+                        android:text="Descuento:"
+                        android:paddingRight="10dp"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                    <TextView
+                        android:id="@+id/txtDesc"
+                        android:textStyle="bold"
+                        android:textSize="26sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

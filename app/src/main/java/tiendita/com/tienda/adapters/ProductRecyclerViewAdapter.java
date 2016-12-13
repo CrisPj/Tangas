@@ -71,6 +71,10 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         return products.length;
     }
 
+    public void setProducts(Product[] products) {
+        this.products = products;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;

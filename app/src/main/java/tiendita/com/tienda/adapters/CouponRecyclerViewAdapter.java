@@ -42,6 +42,7 @@ public class CouponRecyclerViewAdapter extends RecyclerView.Adapter<CouponRecycl
         holder.mItem = coupons[position];
 
         holder.mContentView.setText(coupon.getCode());
+        holder.desc.setText(coupon.getAmount());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +61,14 @@ public class CouponRecyclerViewAdapter extends RecyclerView.Adapter<CouponRecycl
         return coupons.length;
     }
 
+    public void setCoupons(Coupons[] coupons) {
+        this.coupons = coupons;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mContentView;
+        public final TextView desc;
         public Coupons mItem;
 
         public ViewHolder(View view) {
@@ -70,6 +76,7 @@ public class CouponRecyclerViewAdapter extends RecyclerView.Adapter<CouponRecycl
             super(view);
             mView = view;
             mContentView = (TextView) view.findViewById(R.id.txtCoupon);
+            desc = (TextView) view.findViewById(R.id.txtDesc);
         }
 
         @Override
