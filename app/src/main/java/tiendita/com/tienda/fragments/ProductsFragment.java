@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -37,6 +36,7 @@ import tiendita.com.tienda.pojo.Product;
 public class ProductsFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private View progressContainer;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private ProductInteractionListener mListener;
@@ -48,26 +48,10 @@ public class ProductsFragment extends Fragment {
     public ProductsFragment() {
     }
 
-    public static void replaceFragment(final FragmentTransaction ft, final Context context, final ProgressBar requestProgress) {
-        requestProgress.setVisibility(View.VISIBLE);
-        // Retrieve products
-        ProductsAPI api = ServiceGenerator.createAuthenticatedService(ProductsAPI.class, context);
-        api.listProducts().enqueue(new Callback<Product[]>() {
-            @Override
-            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
-                requestProgress.setVisibility(View.GONE);
-                ProductsFragment pf = new ProductsFragment();
-                pf.setProducts(response.body());
-                ft.replace(R.id.fragment_container, pf);
-                ft.commit();
-            }
-
-            @Override
-            public void onFailure(Call<Product[]> call, Throwable t) {
-                requestProgress.setVisibility(View.GONE);
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
-            }
-        });
+    public static void replaceFragment(final FragmentTransaction ft) {
+        ProductsFragment pf = new ProductsFragment();
+        ft.replace(R.id.fragment_container, pf);
+        ft.commit();
     }
 
     public static ProductsFragment newInstance(int itemCount) {
@@ -81,6 +65,28 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProductsAPI api = ServiceGenerator.createAuthenticatedService(ProductsAPI.class, getContext());
+        api.listProducts().enqueue(new Callback<Product[]>() {
+            @Override
+            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
+                products = response.body();
+                adapter = new ProductRecyclerViewAdapter(products, mListener, getContext());
+                recyclerView.setAdapter(adapter);
+                EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                        loadNextDataFromApi(page);
+                    }
+                };
+                recyclerView.addOnScrollListener(scrollListener);
+                progressContainer.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Product[]> call, Throwable t) {
+
+            }
+        });
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -89,29 +95,18 @@ public class ProductsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler, container, false);
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            final Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            mLayoutManager = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(mLayoutManager);
-            adapter = new ProductRecyclerViewAdapter(products, mListener, context);
-            recyclerView.setAdapter(adapter);
-            EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
-                @Override
-                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                    loadNextDataFromApi(page);
-                }
-            };
-            recyclerView.addOnScrollListener(scrollListener);
-        }
+        progressContainer = view.findViewById(R.id.progressContainer);
+        final Context context = view.getContext();
+        recyclerView = (RecyclerView) view.findViewById(R.id.productsRecyclerView);
+        mLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(mLayoutManager);
         return view;
     }
 
     private void loadNextDataFromApi(int page) {
         ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
         Map<String, String> params = new HashMap<>();
-        params.put("offset",""+(offset+=10));
+        params.put("offset", "" + (offset += 10));
         api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
             @Override
             public void onResponse(Call<Product[]> call, Response<Product[]> response) {
@@ -122,19 +117,19 @@ public class ProductsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Product[]> call, Throwable t) {
-                Toast.makeText(getContext(),"No hay mas products",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "No hay mas products", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private Product[] concat(Product[] b) {
-                int bLen = b.length;
-                int aLen = products.length;
-                Product[] c= new Product[aLen+bLen];
-                System.arraycopy(products, 0, c, 0, aLen);
-                System.arraycopy(b, 0, c, aLen, bLen);
-                return c;
-            }
+        int bLen = b.length;
+        int aLen = products.length;
+        Product[] c = new Product[aLen + bLen];
+        System.arraycopy(products, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+        return c;
+    }
 
     @Override
     public void onAttach(Context context) {

@@ -32,6 +32,7 @@ import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
+import tiendita.com.tienda.fragments.ReportsFragment;
 import tiendita.com.tienda.fragments.UsersFragment;
 import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         }
         switch (id) {
             case R.id.products:
-                ProductsFragment.replaceFragment(ft, getApplicationContext(), requestProgress);
+                ProductsFragment.replaceFragment(ft);
                 setFabIcon(R.drawable.ic_add_shopping_cart_black_24dp);
                 break;
             case R.id.logout:
@@ -145,6 +146,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.orders:
                 OrdersFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "OF");
                 setFabIcon(R.drawable.ic_add_white_24dp);
+                break;
+            case R.id.reportes:
+                ReportsFragment reportsFragment = new ReportsFragment();
+                ft.replace(R.id.fragment_container, reportsFragment);
+                ft.commit();
                 break;
             default:
                 fab.hide();
