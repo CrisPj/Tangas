@@ -28,4 +28,7 @@ public interface CustomersAPI {
     @POST("/wp-json/wc/v1/customers/{id}")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<Customer> updateCustomer(@Path("id") int id, @Body Customer data);
+
+    @GET("/wp-json/wc/v1/customers/{id}")
+    Call<Customer> getCustomer(@Path("id") int id);
 }

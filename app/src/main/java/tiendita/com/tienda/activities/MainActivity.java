@@ -25,6 +25,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
+import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
 import tiendita.com.tienda.fragments.UsersFragment;
 import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
@@ -122,6 +123,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.clients:
                 UsersFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "UP");
+                setFabIcon(R.drawable.ic_add_white_24dp);
+                break;
+            case R.id.orders:
+                OrdersFragment.replaceFragment(ft,getApplicationContext(),requestProgress,"OF");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             default:
