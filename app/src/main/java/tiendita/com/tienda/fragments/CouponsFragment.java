@@ -157,10 +157,17 @@ public class CouponsFragment extends CustomFragment {
                 api.addCoupon(nuevo).enqueue(new Callback<Coupons>() {
                     @Override
                     public void onResponse(Call<Coupons> call, Response<Coupons> response) {
-                        Toast.makeText(getContext(),"Creado correctamente",Toast.LENGTH_LONG).show();
-                        coupons = (concat(coupons,response.body()));
-                        ((CouponRecyclerViewAdapter)adapter).setCoupons(coupons);
-                        ((CouponRecyclerViewAdapter)adapter).notifyDataSetChanged();
+                        if (response.isSuccessful())
+                        {
+                            Toast.makeText(getContext(),"Creado correctamente",Toast.LENGTH_LONG).show();
+                            coupons = (concat(coupons,response.body()));
+                            ((CouponRecyclerViewAdapter)adapter).setCoupons(coupons);
+                            ((CouponRecyclerViewAdapter)adapter).notifyDataSetChanged();
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext(),"Cupon ya existente",Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
