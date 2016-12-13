@@ -170,7 +170,6 @@ public class CouponsFragment extends Fragment {
                 ft.replace(R.id.fragment_container, pf, cp);
                 ft.commit();
             }
-
             @Override
             public void onFailure(Call<Coupons[]> call, Throwable t) {
                 requestProgress.setVisibility(View.GONE);

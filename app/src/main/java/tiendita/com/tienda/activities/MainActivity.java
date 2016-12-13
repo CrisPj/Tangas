@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +23,8 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.List;
 
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.entities.UserData;
@@ -108,7 +112,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        List<Fragment> fragments = manager.getFragments();
+        if (fragments != null) {
+            for (Fragment f :
+                    fragments) {
+                ft.remove(f);
+            }
+            ft.commit();
+            ft = manager.beginTransaction();
+        }
         switch (id) {
             case R.id.products:
                 ProductsFragment.replaceFragment(ft, getApplicationContext(), requestProgress);
@@ -129,7 +143,7 @@ public class MainActivity extends AppCompatActivity
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.orders:
-                OrdersFragment.replaceFragment(ft,getApplicationContext(),requestProgress,"OF");
+                OrdersFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "OF");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             default:
