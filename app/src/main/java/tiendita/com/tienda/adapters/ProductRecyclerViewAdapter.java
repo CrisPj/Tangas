@@ -8,8 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.fragments.ProductsFragment;
+import tiendita.com.tienda.pojo.Image;
 import tiendita.com.tienda.pojo.Product;
 import tiendita.com.tienda.pojo.Products;
 
@@ -19,11 +24,11 @@ import tiendita.com.tienda.pojo.Products;
 
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
-    private Products products;
+    private Product[] products;
     private ProductsFragment.ProductInteractionListener mListener;
     private Context context;
 
-    public ProductRecyclerViewAdapter(Products products, ProductsFragment.ProductInteractionListener mListener, Context context) {
+    public ProductRecyclerViewAdapter(Product[] products, ProductsFragment.ProductInteractionListener mListener, Context context) {
         this.products = products;
         this.mListener = mListener;
         this.context = context;
@@ -39,15 +44,15 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Product product = products.getProduct(position);
+        Product product = products[position];
 
-        holder.mItem = products.getProduct(position);
+        holder.mItem = products[position];
         holder.mIdView.setText("" + holder.mItem.getId());
 
-        holder.mContentView.setText(product.getTitle());
-        //List<tiendita.com.tienda.pojo.Image> images = product.getImages();
-        //if (images.length > 0)
-        //  Picasso.with(context).load(images[0].getSrc()).into(holder.mImageView);
+        holder.mContentView.setText(product.getName());
+        List<Image> images = product.getImages();
+        if (images.size() > 0)
+            Picasso.with(context).load(images.get(0).getSrc()).into(holder.mImageView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +68,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
 
     @Override
     public int getItemCount() {
-        return products.getSize();
+        return products.length;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

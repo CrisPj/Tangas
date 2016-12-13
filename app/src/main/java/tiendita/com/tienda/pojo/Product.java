@@ -1,88 +1,209 @@
 
 package tiendita.com.tienda.pojo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Product {
 
-    private String title;
-    private Integer id;
-    private String createdAt;
-    private String updatedAt;
+    private int id;
+    private String name;
+    private String slug;
+    private String permalink;
+    private String dateCreated;
+    private String dateModified;
     private String type;
     private String status;
-    private Boolean downloadable;
-    private Boolean virtual;
-    private String permalink;
+    private boolean featured;
+    private String catalogVisibility;
+    private String description;
+    private String shortDescription;
     private String sku;
     private String price;
     private String regularPrice;
-    private Object salePrice;
+    private String salePrice;
+    private String dateOnSaleFrom;
+    private String dateOnSaleTo;
     private String priceHtml;
-    private Boolean taxable;
+    private boolean onSale;
+    private boolean purchasable;
+    private int totalSales;
+    private boolean virtual;
+    private boolean downloadable;
+    private List<Object> downloads = null;
+    private int downloadLimit;
+    private int downloadExpiry;
+    private String downloadType;
+    private String externalUrl;
+    private String buttonText;
     private String taxStatus;
     private String taxClass;
-    private Boolean managingStock;
-    private Integer stockQuantity;
-    private Boolean inStock;
-    private Boolean backordersAllowed;
-    private Boolean backordered;
-    private Boolean soldIndividually;
-    private Boolean purchaseable;
-    private Boolean featured;
-    private Boolean visible;
-    private String catalogVisibility;
-    private Boolean onSale;
-    private Object weight;
+    private boolean manageStock;
+    private Object stockQuantity;
+    private boolean inStock;
+    private String backorders;
+    private boolean backordersAllowed;
+    private boolean backordered;
+    private boolean soldIndividually;
+    private String weight;
     private Dimensions dimensions;
-    private Boolean shippingRequired;
-    private Boolean shippingTaxable;
+    private boolean shippingRequired;
+    private boolean shippingTaxable;
     private String shippingClass;
-    private Object shippingClassId;
-    private String description;
-    private String shortDescription;
-    private Boolean reviewsAllowed;
+    private int shippingClassId;
+    private boolean reviewsAllowed;
     private String averageRating;
-    private Integer ratingCount;
+    private int ratingCount;
     private List<Integer> relatedIds = null;
     private List<Object> upsellIds = null;
     private List<Object> crossSellIds = null;
-    private Integer parentId;
-    private List<String> categories = null;
-    private List<Object> tags = null;
-    private List<Image> images = null;
-    private String featuredSrc;
-    private List<Attribute> attributes = null;
-    private List<Object> downloads = null;
-    private Integer downloadLimit;
-    private Integer downloadExpiry;
-    private String downloadType;
+    private int parentId;
     private String purchaseNote;
-    private Integer totalSales;
-    private List<Variation> variations = null;
-    private List<Object> parent = null;
+    private List<Category> categories = null;
+    private List<Tag> tags = null;
+    private List<Image> images = null;
+    private List<Object> attributes = null;
+    private List<Object> defaultAttributes = null;
+    private List<Object> variations = null;
     private List<Object> groupedProducts = null;
-    private Integer menuOrder;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private int menuOrder;
+    private Links links;
 
     /**
+     * No args constructor for use in serialization
      * 
-     * @return
-     *     The title
      */
-    public String getTitle() {
-        return title;
+    public Product() {
     }
 
     /**
      * 
-     * @param title
-     *     The title
+     * @param dateModified
+     * @param manageStock
+     * @param featured
+     * @param crossSellIds
+     * @param type
+     * @param variations
+     * @param upsellIds
+     * @param downloadType
+     * @param description
+     * @param shippingRequired
+     * @param shippingTaxable
+     * @param totalSales
+     * @param status
+     * @param groupedProducts
+     * @param sku
+     * @param shippingClassId
+     * @param shippingClass
+     * @param price
+     * @param permalink
+     * @param shortDescription
+     * @param soldIndividually
+     * @param images
+     * @param salePrice
+     * @param slug
+     * @param regularPrice
+     * @param buttonText
+     * @param virtual
+     * @param backordersAllowed
+     * @param weight
+     * @param averageRating
+     * @param stockQuantity
+     * @param purchasable
+     * @param dateOnSaleFrom
+     * @param menuOrder
+     * @param downloads
+     * @param downloadable
+     * @param id
+     * @param parentId
+     * @param priceHtml
+     * @param name
+     * @param dimensions
+     * @param relatedIds
+     * @param downloadLimit
+     * @param dateOnSaleTo
+     * @param tags
+     * @param onSale
+     * @param taxStatus
+     * @param ratingCount
+     * @param links
+     * @param downloadExpiry
+     * @param backorders
+     * @param catalogVisibility
+     * @param taxClass
+     * @param purchaseNote
+     * @param reviewsAllowed
+     * @param defaultAttributes
+     * @param dateCreated
+     * @param backordered
+     * @param categories
+     * @param attributes
+     * @param externalUrl
+     * @param inStock
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public Product(int id, String name, String slug, String permalink, String dateCreated, String dateModified, String type, String status, boolean featured, String catalogVisibility, String description, String shortDescription, String sku, String price, String regularPrice, String salePrice, String dateOnSaleFrom, String dateOnSaleTo, String priceHtml, boolean onSale, boolean purchasable, int totalSales, boolean virtual, boolean downloadable, List<Object> downloads, int downloadLimit, int downloadExpiry, String downloadType, String externalUrl, String buttonText, String taxStatus, String taxClass, boolean manageStock, Object stockQuantity, boolean inStock, String backorders, boolean backordersAllowed, boolean backordered, boolean soldIndividually, String weight, Dimensions dimensions, boolean shippingRequired, boolean shippingTaxable, String shippingClass, int shippingClassId, boolean reviewsAllowed, String averageRating, int ratingCount, List<Integer> relatedIds, List<Object> upsellIds, List<Object> crossSellIds, int parentId, String purchaseNote, List<Category> categories, List<Tag> tags, List<Image> images, List<Object> attributes, List<Object> defaultAttributes, List<Object> variations, List<Object> groupedProducts, int menuOrder, Links links) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.slug = slug;
+        this.permalink = permalink;
+        this.dateCreated = dateCreated;
+        this.dateModified = dateModified;
+        this.type = type;
+        this.status = status;
+        this.featured = featured;
+        this.catalogVisibility = catalogVisibility;
+        this.description = description;
+        this.shortDescription = shortDescription;
+        this.sku = sku;
+        this.price = price;
+        this.regularPrice = regularPrice;
+        this.salePrice = salePrice;
+        this.dateOnSaleFrom = dateOnSaleFrom;
+        this.dateOnSaleTo = dateOnSaleTo;
+        this.priceHtml = priceHtml;
+        this.onSale = onSale;
+        this.purchasable = purchasable;
+        this.totalSales = totalSales;
+        this.virtual = virtual;
+        this.downloadable = downloadable;
+        this.downloads = downloads;
+        this.downloadLimit = downloadLimit;
+        this.downloadExpiry = downloadExpiry;
+        this.downloadType = downloadType;
+        this.externalUrl = externalUrl;
+        this.buttonText = buttonText;
+        this.taxStatus = taxStatus;
+        this.taxClass = taxClass;
+        this.manageStock = manageStock;
+        this.stockQuantity = stockQuantity;
+        this.inStock = inStock;
+        this.backorders = backorders;
+        this.backordersAllowed = backordersAllowed;
+        this.backordered = backordered;
+        this.soldIndividually = soldIndividually;
+        this.weight = weight;
+        this.dimensions = dimensions;
+        this.shippingRequired = shippingRequired;
+        this.shippingTaxable = shippingTaxable;
+        this.shippingClass = shippingClass;
+        this.shippingClassId = shippingClassId;
+        this.reviewsAllowed = reviewsAllowed;
+        this.averageRating = averageRating;
+        this.ratingCount = ratingCount;
+        this.relatedIds = relatedIds;
+        this.upsellIds = upsellIds;
+        this.crossSellIds = crossSellIds;
+        this.parentId = parentId;
+        this.purchaseNote = purchaseNote;
+        this.categories = categories;
+        this.tags = tags;
+        this.images = images;
+        this.attributes = attributes;
+        this.defaultAttributes = defaultAttributes;
+        this.variations = variations;
+        this.groupedProducts = groupedProducts;
+        this.menuOrder = menuOrder;
+        this.links = links;
     }
 
     /**
@@ -90,7 +211,7 @@ public class Product {
      * @return
      *     The id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -99,44 +220,98 @@ public class Product {
      * @param id
      *     The id
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * 
      * @return
-     *     The createdAt
+     *     The name
      */
-    public String getCreatedAt() {
-        return createdAt;
+    public String getName() {
+        return name;
     }
 
     /**
      * 
-     * @param createdAt
-     *     The created_at
+     * @param name
+     *     The name
      */
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
      * 
      * @return
-     *     The updatedAt
+     *     The slug
      */
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getSlug() {
+        return slug;
     }
 
     /**
      * 
-     * @param updatedAt
-     *     The updated_at
+     * @param slug
+     *     The slug
      */
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    /**
+     * 
+     * @return
+     *     The permalink
+     */
+    public String getPermalink() {
+        return permalink;
+    }
+
+    /**
+     * 
+     * @param permalink
+     *     The permalink
+     */
+    public void setPermalink(String permalink) {
+        this.permalink = permalink;
+    }
+
+    /**
+     * 
+     * @return
+     *     The dateCreated
+     */
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    /**
+     * 
+     * @param dateCreated
+     *     The date_created
+     */
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    /**
+     * 
+     * @return
+     *     The dateModified
+     */
+    public String getDateModified() {
+        return dateModified;
+    }
+
+    /**
+     * 
+     * @param dateModified
+     *     The date_modified
+     */
+    public void setDateModified(String dateModified) {
+        this.dateModified = dateModified;
     }
 
     /**
@@ -178,55 +353,73 @@ public class Product {
     /**
      * 
      * @return
-     *     The downloadable
+     *     The featured
      */
-    public Boolean getDownloadable() {
-        return downloadable;
+    public boolean isFeatured() {
+        return featured;
     }
 
     /**
      * 
-     * @param downloadable
-     *     The downloadable
+     * @param featured
+     *     The featured
      */
-    public void setDownloadable(Boolean downloadable) {
-        this.downloadable = downloadable;
-    }
-
-    /**
-     * 
-     * @return
-     *     The virtual
-     */
-    public Boolean getVirtual() {
-        return virtual;
-    }
-
-    /**
-     * 
-     * @param virtual
-     *     The virtual
-     */
-    public void setVirtual(Boolean virtual) {
-        this.virtual = virtual;
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
     }
 
     /**
      * 
      * @return
-     *     The permalink
+     *     The catalogVisibility
      */
-    public String getPermalink() {
-        return permalink;
+    public String getCatalogVisibility() {
+        return catalogVisibility;
     }
 
     /**
      * 
-     * @param permalink
-     *     The permalink
+     * @param catalogVisibility
+     *     The catalog_visibility
      */
-    public void setPermalink(String permalink) {
-        this.permalink = permalink;
+    public void setCatalogVisibility(String catalogVisibility) {
+        this.catalogVisibility = catalogVisibility;
+    }
+
+    /**
+     * 
+     * @return
+     *     The description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 
+     * @param description
+     *     The description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * 
+     * @return
+     *     The shortDescription
+     */
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    /**
+     * 
+     * @param shortDescription
+     *     The short_description
+     */
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     /**
@@ -288,7 +481,7 @@ public class Product {
      * @return
      *     The salePrice
      */
-    public Object getSalePrice() {
+    public String getSalePrice() {
         return salePrice;
     }
 
@@ -297,8 +490,44 @@ public class Product {
      * @param salePrice
      *     The sale_price
      */
-    public void setSalePrice(Object salePrice) {
+    public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
+    }
+
+    /**
+     * 
+     * @return
+     *     The dateOnSaleFrom
+     */
+    public String getDateOnSaleFrom() {
+        return dateOnSaleFrom;
+    }
+
+    /**
+     * 
+     * @param dateOnSaleFrom
+     *     The date_on_sale_from
+     */
+    public void setDateOnSaleFrom(String dateOnSaleFrom) {
+        this.dateOnSaleFrom = dateOnSaleFrom;
+    }
+
+    /**
+     * 
+     * @return
+     *     The dateOnSaleTo
+     */
+    public String getDateOnSaleTo() {
+        return dateOnSaleTo;
+    }
+
+    /**
+     * 
+     * @param dateOnSaleTo
+     *     The date_on_sale_to
+     */
+    public void setDateOnSaleTo(String dateOnSaleTo) {
+        this.dateOnSaleTo = dateOnSaleTo;
     }
 
     /**
@@ -322,19 +551,199 @@ public class Product {
     /**
      * 
      * @return
-     *     The taxable
+     *     The onSale
      */
-    public Boolean getTaxable() {
-        return taxable;
+    public boolean isOnSale() {
+        return onSale;
     }
 
     /**
      * 
-     * @param taxable
-     *     The taxable
+     * @param onSale
+     *     The on_sale
      */
-    public void setTaxable(Boolean taxable) {
-        this.taxable = taxable;
+    public void setOnSale(boolean onSale) {
+        this.onSale = onSale;
+    }
+
+    /**
+     * 
+     * @return
+     *     The purchasable
+     */
+    public boolean isPurchasable() {
+        return purchasable;
+    }
+
+    /**
+     * 
+     * @param purchasable
+     *     The purchasable
+     */
+    public void setPurchasable(boolean purchasable) {
+        this.purchasable = purchasable;
+    }
+
+    /**
+     * 
+     * @return
+     *     The totalSales
+     */
+    public int getTotalSales() {
+        return totalSales;
+    }
+
+    /**
+     * 
+     * @param totalSales
+     *     The total_sales
+     */
+    public void setTotalSales(int totalSales) {
+        this.totalSales = totalSales;
+    }
+
+    /**
+     * 
+     * @return
+     *     The virtual
+     */
+    public boolean isVirtual() {
+        return virtual;
+    }
+
+    /**
+     * 
+     * @param virtual
+     *     The virtual
+     */
+    public void setVirtual(boolean virtual) {
+        this.virtual = virtual;
+    }
+
+    /**
+     * 
+     * @return
+     *     The downloadable
+     */
+    public boolean isDownloadable() {
+        return downloadable;
+    }
+
+    /**
+     * 
+     * @param downloadable
+     *     The downloadable
+     */
+    public void setDownloadable(boolean downloadable) {
+        this.downloadable = downloadable;
+    }
+
+    /**
+     * 
+     * @return
+     *     The downloads
+     */
+    public List<Object> getDownloads() {
+        return downloads;
+    }
+
+    /**
+     * 
+     * @param downloads
+     *     The downloads
+     */
+    public void setDownloads(List<Object> downloads) {
+        this.downloads = downloads;
+    }
+
+    /**
+     * 
+     * @return
+     *     The downloadLimit
+     */
+    public int getDownloadLimit() {
+        return downloadLimit;
+    }
+
+    /**
+     * 
+     * @param downloadLimit
+     *     The download_limit
+     */
+    public void setDownloadLimit(int downloadLimit) {
+        this.downloadLimit = downloadLimit;
+    }
+
+    /**
+     * 
+     * @return
+     *     The downloadExpiry
+     */
+    public int getDownloadExpiry() {
+        return downloadExpiry;
+    }
+
+    /**
+     * 
+     * @param downloadExpiry
+     *     The download_expiry
+     */
+    public void setDownloadExpiry(int downloadExpiry) {
+        this.downloadExpiry = downloadExpiry;
+    }
+
+    /**
+     * 
+     * @return
+     *     The downloadType
+     */
+    public String getDownloadType() {
+        return downloadType;
+    }
+
+    /**
+     * 
+     * @param downloadType
+     *     The download_type
+     */
+    public void setDownloadType(String downloadType) {
+        this.downloadType = downloadType;
+    }
+
+    /**
+     * 
+     * @return
+     *     The externalUrl
+     */
+    public String getExternalUrl() {
+        return externalUrl;
+    }
+
+    /**
+     * 
+     * @param externalUrl
+     *     The external_url
+     */
+    public void setExternalUrl(String externalUrl) {
+        this.externalUrl = externalUrl;
+    }
+
+    /**
+     * 
+     * @return
+     *     The buttonText
+     */
+    public String getButtonText() {
+        return buttonText;
+    }
+
+    /**
+     * 
+     * @param buttonText
+     *     The button_text
+     */
+    public void setButtonText(String buttonText) {
+        this.buttonText = buttonText;
     }
 
     /**
@@ -376,19 +785,19 @@ public class Product {
     /**
      * 
      * @return
-     *     The managingStock
+     *     The manageStock
      */
-    public Boolean getManagingStock() {
-        return managingStock;
+    public boolean isManageStock() {
+        return manageStock;
     }
 
     /**
      * 
-     * @param managingStock
-     *     The managing_stock
+     * @param manageStock
+     *     The manage_stock
      */
-    public void setManagingStock(Boolean managingStock) {
-        this.managingStock = managingStock;
+    public void setManageStock(boolean manageStock) {
+        this.manageStock = manageStock;
     }
 
     /**
@@ -396,7 +805,7 @@ public class Product {
      * @return
      *     The stockQuantity
      */
-    public Integer getStockQuantity() {
+    public Object getStockQuantity() {
         return stockQuantity;
     }
 
@@ -405,7 +814,7 @@ public class Product {
      * @param stockQuantity
      *     The stock_quantity
      */
-    public void setStockQuantity(Integer stockQuantity) {
+    public void setStockQuantity(Object stockQuantity) {
         this.stockQuantity = stockQuantity;
     }
 
@@ -414,7 +823,7 @@ public class Product {
      * @return
      *     The inStock
      */
-    public Boolean getInStock() {
+    public boolean isInStock() {
         return inStock;
     }
 
@@ -423,8 +832,26 @@ public class Product {
      * @param inStock
      *     The in_stock
      */
-    public void setInStock(Boolean inStock) {
+    public void setInStock(boolean inStock) {
         this.inStock = inStock;
+    }
+
+    /**
+     * 
+     * @return
+     *     The backorders
+     */
+    public String getBackorders() {
+        return backorders;
+    }
+
+    /**
+     * 
+     * @param backorders
+     *     The backorders
+     */
+    public void setBackorders(String backorders) {
+        this.backorders = backorders;
     }
 
     /**
@@ -432,7 +859,7 @@ public class Product {
      * @return
      *     The backordersAllowed
      */
-    public Boolean getBackordersAllowed() {
+    public boolean isBackordersAllowed() {
         return backordersAllowed;
     }
 
@@ -441,7 +868,7 @@ public class Product {
      * @param backordersAllowed
      *     The backorders_allowed
      */
-    public void setBackordersAllowed(Boolean backordersAllowed) {
+    public void setBackordersAllowed(boolean backordersAllowed) {
         this.backordersAllowed = backordersAllowed;
     }
 
@@ -450,7 +877,7 @@ public class Product {
      * @return
      *     The backordered
      */
-    public Boolean getBackordered() {
+    public boolean isBackordered() {
         return backordered;
     }
 
@@ -459,7 +886,7 @@ public class Product {
      * @param backordered
      *     The backordered
      */
-    public void setBackordered(Boolean backordered) {
+    public void setBackordered(boolean backordered) {
         this.backordered = backordered;
     }
 
@@ -468,7 +895,7 @@ public class Product {
      * @return
      *     The soldIndividually
      */
-    public Boolean getSoldIndividually() {
+    public boolean isSoldIndividually() {
         return soldIndividually;
     }
 
@@ -477,98 +904,8 @@ public class Product {
      * @param soldIndividually
      *     The sold_individually
      */
-    public void setSoldIndividually(Boolean soldIndividually) {
+    public void setSoldIndividually(boolean soldIndividually) {
         this.soldIndividually = soldIndividually;
-    }
-
-    /**
-     * 
-     * @return
-     *     The purchaseable
-     */
-    public Boolean getPurchaseable() {
-        return purchaseable;
-    }
-
-    /**
-     * 
-     * @param purchaseable
-     *     The purchaseable
-     */
-    public void setPurchaseable(Boolean purchaseable) {
-        this.purchaseable = purchaseable;
-    }
-
-    /**
-     * 
-     * @return
-     *     The featured
-     */
-    public Boolean getFeatured() {
-        return featured;
-    }
-
-    /**
-     * 
-     * @param featured
-     *     The featured
-     */
-    public void setFeatured(Boolean featured) {
-        this.featured = featured;
-    }
-
-    /**
-     * 
-     * @return
-     *     The visible
-     */
-    public Boolean getVisible() {
-        return visible;
-    }
-
-    /**
-     * 
-     * @param visible
-     *     The visible
-     */
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
-    }
-
-    /**
-     * 
-     * @return
-     *     The catalogVisibility
-     */
-    public String getCatalogVisibility() {
-        return catalogVisibility;
-    }
-
-    /**
-     * 
-     * @param catalogVisibility
-     *     The catalog_visibility
-     */
-    public void setCatalogVisibility(String catalogVisibility) {
-        this.catalogVisibility = catalogVisibility;
-    }
-
-    /**
-     * 
-     * @return
-     *     The onSale
-     */
-    public Boolean getOnSale() {
-        return onSale;
-    }
-
-    /**
-     * 
-     * @param onSale
-     *     The on_sale
-     */
-    public void setOnSale(Boolean onSale) {
-        this.onSale = onSale;
     }
 
     /**
@@ -576,7 +913,7 @@ public class Product {
      * @return
      *     The weight
      */
-    public Object getWeight() {
+    public String getWeight() {
         return weight;
     }
 
@@ -585,7 +922,7 @@ public class Product {
      * @param weight
      *     The weight
      */
-    public void setWeight(Object weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
@@ -612,7 +949,7 @@ public class Product {
      * @return
      *     The shippingRequired
      */
-    public Boolean getShippingRequired() {
+    public boolean isShippingRequired() {
         return shippingRequired;
     }
 
@@ -621,7 +958,7 @@ public class Product {
      * @param shippingRequired
      *     The shipping_required
      */
-    public void setShippingRequired(Boolean shippingRequired) {
+    public void setShippingRequired(boolean shippingRequired) {
         this.shippingRequired = shippingRequired;
     }
 
@@ -630,7 +967,7 @@ public class Product {
      * @return
      *     The shippingTaxable
      */
-    public Boolean getShippingTaxable() {
+    public boolean isShippingTaxable() {
         return shippingTaxable;
     }
 
@@ -639,7 +976,7 @@ public class Product {
      * @param shippingTaxable
      *     The shipping_taxable
      */
-    public void setShippingTaxable(Boolean shippingTaxable) {
+    public void setShippingTaxable(boolean shippingTaxable) {
         this.shippingTaxable = shippingTaxable;
     }
 
@@ -666,7 +1003,7 @@ public class Product {
      * @return
      *     The shippingClassId
      */
-    public Object getShippingClassId() {
+    public int getShippingClassId() {
         return shippingClassId;
     }
 
@@ -675,44 +1012,8 @@ public class Product {
      * @param shippingClassId
      *     The shipping_class_id
      */
-    public void setShippingClassId(Object shippingClassId) {
+    public void setShippingClassId(int shippingClassId) {
         this.shippingClassId = shippingClassId;
-    }
-
-    /**
-     * 
-     * @return
-     *     The description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * 
-     * @param description
-     *     The description
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * 
-     * @return
-     *     The shortDescription
-     */
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    /**
-     * 
-     * @param shortDescription
-     *     The short_description
-     */
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
     }
 
     /**
@@ -720,7 +1021,7 @@ public class Product {
      * @return
      *     The reviewsAllowed
      */
-    public Boolean getReviewsAllowed() {
+    public boolean isReviewsAllowed() {
         return reviewsAllowed;
     }
 
@@ -729,7 +1030,7 @@ public class Product {
      * @param reviewsAllowed
      *     The reviews_allowed
      */
-    public void setReviewsAllowed(Boolean reviewsAllowed) {
+    public void setReviewsAllowed(boolean reviewsAllowed) {
         this.reviewsAllowed = reviewsAllowed;
     }
 
@@ -756,7 +1057,7 @@ public class Product {
      * @return
      *     The ratingCount
      */
-    public Integer getRatingCount() {
+    public int getRatingCount() {
         return ratingCount;
     }
 
@@ -765,7 +1066,7 @@ public class Product {
      * @param ratingCount
      *     The rating_count
      */
-    public void setRatingCount(Integer ratingCount) {
+    public void setRatingCount(int ratingCount) {
         this.ratingCount = ratingCount;
     }
 
@@ -828,7 +1129,7 @@ public class Product {
      * @return
      *     The parentId
      */
-    public Integer getParentId() {
+    public int getParentId() {
         return parentId;
     }
 
@@ -837,8 +1138,26 @@ public class Product {
      * @param parentId
      *     The parent_id
      */
-    public void setParentId(Integer parentId) {
+    public void setParentId(int parentId) {
         this.parentId = parentId;
+    }
+
+    /**
+     * 
+     * @return
+     *     The purchaseNote
+     */
+    public String getPurchaseNote() {
+        return purchaseNote;
+    }
+
+    /**
+     * 
+     * @param purchaseNote
+     *     The purchase_note
+     */
+    public void setPurchaseNote(String purchaseNote) {
+        this.purchaseNote = purchaseNote;
     }
 
     /**
@@ -846,7 +1165,7 @@ public class Product {
      * @return
      *     The categories
      */
-    public List<String> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
@@ -855,7 +1174,7 @@ public class Product {
      * @param categories
      *     The categories
      */
-    public void setCategories(List<String> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -864,7 +1183,7 @@ public class Product {
      * @return
      *     The tags
      */
-    public List<Object> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
@@ -873,7 +1192,7 @@ public class Product {
      * @param tags
      *     The tags
      */
-    public void setTags(List<Object> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
@@ -898,27 +1217,9 @@ public class Product {
     /**
      * 
      * @return
-     *     The featuredSrc
-     */
-    public String getFeaturedSrc() {
-        return featuredSrc;
-    }
-
-    /**
-     * 
-     * @param featuredSrc
-     *     The featured_src
-     */
-    public void setFeaturedSrc(String featuredSrc) {
-        this.featuredSrc = featuredSrc;
-    }
-
-    /**
-     * 
-     * @return
      *     The attributes
      */
-    public List<Attribute> getAttributes() {
+    public List<Object> getAttributes() {
         return attributes;
     }
 
@@ -927,116 +1228,26 @@ public class Product {
      * @param attributes
      *     The attributes
      */
-    public void setAttributes(List<Attribute> attributes) {
+    public void setAttributes(List<Object> attributes) {
         this.attributes = attributes;
     }
 
     /**
      * 
      * @return
-     *     The downloads
+     *     The defaultAttributes
      */
-    public List<Object> getDownloads() {
-        return downloads;
+    public List<Object> getDefaultAttributes() {
+        return defaultAttributes;
     }
 
     /**
      * 
-     * @param downloads
-     *     The downloads
+     * @param defaultAttributes
+     *     The default_attributes
      */
-    public void setDownloads(List<Object> downloads) {
-        this.downloads = downloads;
-    }
-
-    /**
-     * 
-     * @return
-     *     The downloadLimit
-     */
-    public Integer getDownloadLimit() {
-        return downloadLimit;
-    }
-
-    /**
-     * 
-     * @param downloadLimit
-     *     The download_limit
-     */
-    public void setDownloadLimit(Integer downloadLimit) {
-        this.downloadLimit = downloadLimit;
-    }
-
-    /**
-     * 
-     * @return
-     *     The downloadExpiry
-     */
-    public Integer getDownloadExpiry() {
-        return downloadExpiry;
-    }
-
-    /**
-     * 
-     * @param downloadExpiry
-     *     The download_expiry
-     */
-    public void setDownloadExpiry(Integer downloadExpiry) {
-        this.downloadExpiry = downloadExpiry;
-    }
-
-    /**
-     * 
-     * @return
-     *     The downloadType
-     */
-    public String getDownloadType() {
-        return downloadType;
-    }
-
-    /**
-     * 
-     * @param downloadType
-     *     The download_type
-     */
-    public void setDownloadType(String downloadType) {
-        this.downloadType = downloadType;
-    }
-
-    /**
-     * 
-     * @return
-     *     The purchaseNote
-     */
-    public String getPurchaseNote() {
-        return purchaseNote;
-    }
-
-    /**
-     * 
-     * @param purchaseNote
-     *     The purchase_note
-     */
-    public void setPurchaseNote(String purchaseNote) {
-        this.purchaseNote = purchaseNote;
-    }
-
-    /**
-     * 
-     * @return
-     *     The totalSales
-     */
-    public Integer getTotalSales() {
-        return totalSales;
-    }
-
-    /**
-     * 
-     * @param totalSales
-     *     The total_sales
-     */
-    public void setTotalSales(Integer totalSales) {
-        this.totalSales = totalSales;
+    public void setDefaultAttributes(List<Object> defaultAttributes) {
+        this.defaultAttributes = defaultAttributes;
     }
 
     /**
@@ -1044,7 +1255,7 @@ public class Product {
      * @return
      *     The variations
      */
-    public List<Variation> getVariations() {
+    public List<Object> getVariations() {
         return variations;
     }
 
@@ -1053,26 +1264,8 @@ public class Product {
      * @param variations
      *     The variations
      */
-    public void setVariations(List<Variation> variations) {
+    public void setVariations(List<Object> variations) {
         this.variations = variations;
-    }
-
-    /**
-     * 
-     * @return
-     *     The parent
-     */
-    public List<Object> getParent() {
-        return parent;
-    }
-
-    /**
-     * 
-     * @param parent
-     *     The parent
-     */
-    public void setParent(List<Object> parent) {
-        this.parent = parent;
     }
 
     /**
@@ -1098,7 +1291,7 @@ public class Product {
      * @return
      *     The menuOrder
      */
-    public Integer getMenuOrder() {
+    public int getMenuOrder() {
         return menuOrder;
     }
 
@@ -1107,16 +1300,26 @@ public class Product {
      * @param menuOrder
      *     The menu_order
      */
-    public void setMenuOrder(Integer menuOrder) {
+    public void setMenuOrder(int menuOrder) {
         this.menuOrder = menuOrder;
     }
 
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    /**
+     * 
+     * @return
+     *     The links
+     */
+    public Links getLinks() {
+        return links;
     }
 
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    /**
+     * 
+     * @param links
+     *     The _links
+     */
+    public void setLinks(Links links) {
+        this.links = links;
     }
 
 }
