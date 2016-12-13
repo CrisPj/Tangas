@@ -1,16 +1,22 @@
 package tiendita.com.tienda.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -23,6 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
+import tiendita.com.tienda.adapters.CouponRecyclerViewAdapter;
 import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
 import tiendita.com.tienda.adapters.OrderRecyclerViewAdapter;
 import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
@@ -30,6 +37,8 @@ import tiendita.com.tienda.api.OrdersAPI;
 import tiendita.com.tienda.api.ProductsAPI;
 import tiendita.com.tienda.api.ProductsOffsetAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
+import tiendita.com.tienda.api.WoocommerceAPI;
+import tiendita.com.tienda.pojo.Coupons;
 import tiendita.com.tienda.pojo.Order;
 import tiendita.com.tienda.pojo.Product;
 
@@ -155,6 +164,67 @@ public class OrdersFragment extends Fragment {
         this.orders = orders;
     }
 
+    public void addOrder() {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
+        alert.setTitle("Creacion de Orden");
+
+        LinearLayout layout = new LinearLayout(this.getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final TextView txtTicket = new TextView(this.getContext());
+        txtTicket.setText("Customer:");
+        layout.addView(txtTicket);
+
+        final EditText input = new EditText(this.getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        layout.addView(input);
+
+        final TextView txtNumber = new TextView(this.getContext());
+        txtNumber.setText("Producto");
+        layout.addView(txtNumber);
+
+        final EditText percentage = new EditText(this.getContext());
+        percentage.setInputType(InputType.TYPE_CLASS_NUMBER);
+        layout.addView(percentage);
+
+        alert.setView(layout);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String m_Text = input.getText().toString();
+                String percen = percentage.getText().toString();
+                Order nuevo = new Order();
+                OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
+                api.addOrder(nuevo).enqueue(new Callback<Order>() {
+                    @Override
+                    public void onResponse(Call<Order> call, Response<Order> response) {
+                        Toast.makeText(getContext(),"Creado correctamente",Toast.LENGTH_LONG).show();
+                        orders = (concat(response.body()));
+                        ((OrderRecyclerViewAdapter)adapter).setOrders(orders);
+                        ((OrderRecyclerViewAdapter)adapter).notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Order> call, Throwable t) {
+                        Toast.makeText(getContext(),"error",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+        alert.setNegativeButton("Cancel",null);
+        alert.show();
+    }
+
+    private Order[] concat(Order b)
+    {
+        int aLen = orders.length;
+        Order[] c= new Order[aLen+1];
+        System.arraycopy(orders, 0, c, 0, aLen);
+        c[aLen] = b;
+        return c;
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -174,11 +244,6 @@ public class OrdersFragment extends Fragment {
 
         @Override
         public void onListFragmentInteraction(Order item) {
-            Gson gson = new Gson();
-            String resultado = gson.toJson(item);
-            //Intent i = new Intent(getActivity(), OneProductActivity.class);
-            //i.putExtra("producto", resultado);
-            //startActivity(i);
         }
     }
 

@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -224,6 +225,9 @@ public class MainActivity extends AppCompatActivity
         switch (tag) {
             case "CP":
                 ((CouponsFragment) currentFragment).addCoupon();
+                break;
+            case "OF":
+                ((OrdersFragment) currentFragment).addOrder();
                 break;
             default:
                 Snackbar.make(view, "Not sure what to do...my bad", Snackbar.LENGTH_SHORT).show();
