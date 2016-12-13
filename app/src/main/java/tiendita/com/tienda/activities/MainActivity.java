@@ -23,8 +23,10 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import tiendita.com.tienda.R;
+import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
+import tiendita.com.tienda.pojo.Coupons;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -113,6 +115,9 @@ public class MainActivity extends AppCompatActivity
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
+                break;
+            case R.id.coupons:
+                CouponsFragment.replaceFragment(ft, getApplicationContext(), requestProgress);
                 break;
             default:
                 LoginFragment lf = new LoginFragment();
