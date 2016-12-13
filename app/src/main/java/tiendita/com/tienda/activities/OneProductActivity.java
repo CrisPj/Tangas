@@ -34,8 +34,8 @@ public class OneProductActivity extends AppCompatActivity {
         TextView mpPrecio = (TextView) findViewById(R.id.pprecio);
         TextView mpDesc = (TextView) findViewById(R.id.pdesc);
         mpPrecio.setText(p.getPrice());
-        mpName.setText(p.getTitle());
-        setTitle(p.getTitle());
+        mpName.setText(p.getName());
+        setTitle(p.getName());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             mpDesc.setText(Html.fromHtml(p.getDescription(), Html.FROM_HTML_MODE_COMPACT));
         else mpDesc.setText(Html.fromHtml(p.getDescription()));

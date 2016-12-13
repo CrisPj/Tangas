@@ -1,16 +1,32 @@
 
 package tiendita.com.tienda.pojo;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Dimensions {
 
     private String length;
     private String width;
     private String height;
-    private String unit;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Dimensions() {
+    }
+
+    /**
+     * 
+     * @param height
+     * @param width
+     * @param length
+     */
+    public Dimensions(String length, String width, String height) {
+        super();
+        this.length = length;
+        this.width = width;
+        this.height = height;
+    }
 
     /**
      * 
@@ -64,32 +80,6 @@ public class Dimensions {
      */
     public void setHeight(String height) {
         this.height = height;
-    }
-
-    /**
-     * 
-     * @return
-     *     The unit
-     */
-    public String getUnit() {
-        return unit;
-    }
-
-    /**
-     * 
-     * @param unit
-     *     The unit
-     */
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

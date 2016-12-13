@@ -10,26 +10,25 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import tiendita.com.tienda.R;
-import tiendita.com.tienda.fragments.ProductsFragment;
+import tiendita.com.tienda.fragments.CouponsFragment;
+import tiendita.com.tienda.fragments.UsersFragment;
+import tiendita.com.tienda.pojo.Coupons;
+import tiendita.com.tienda.pojo.Customer;
 import tiendita.com.tienda.pojo.Image;
-import tiendita.com.tienda.pojo.Product;
-import tiendita.com.tienda.pojo.Products;
 
 /**
  * Created by zero_ on 11/12/2016.
  */
 
-public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
+public class CustomersRecyclerViewAdapter extends RecyclerView.Adapter<CustomersRecyclerViewAdapter.ViewHolder> {
 
-    private Product[] products;
-    private ProductsFragment.ProductInteractionListener mListener;
+    private Customer[] customers;
+    private UsersFragment.CustomerInteractionListener mListener;
     private Context context;
 
-    public ProductRecyclerViewAdapter(Product[] products, ProductsFragment.ProductInteractionListener mListener, Context context) {
-        this.products = products;
+    public CustomersRecyclerViewAdapter(Customer[] customers, UsersFragment.CustomerInteractionListener mListener, Context context) {
+        this.customers = customers;
         this.mListener = mListener;
         this.context = context;
     }
@@ -37,22 +36,19 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_producto, parent, false);
-        return new ProductRecyclerViewAdapter.ViewHolder(view);
+                .inflate(R.layout.fragment_customer_list, parent, false);
+        return new CustomersRecyclerViewAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Product product = products[position];
+        Customer customer = customers[position];
 
-        holder.mItem = products[position];
-        holder.mIdView.setText("" + holder.mItem.getId());
+        holder.mItem = customers[position];
 
-        holder.mContentView.setText(product.getName());
-        List<Image> images = product.getImages();
-        if (images.size() > 0)
-            Picasso.with(context).load(images.get(0).getSrc()).into(holder.mImageView);
+        holder.mContentView.setText(customer.getEmail());
+        holder.desc.setText(customer.getUsername());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,27 +64,25 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
 
     @Override
     public int getItemCount() {
-        return products.length;
+        return customers.length;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
+    public void setCustomers(Customer[] customers) {
+        this.customers = customers;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
         public final TextView mContentView;
-        public final ImageView mImageView;
-        public tiendita.com.tienda.pojo.Product mItem;
+        public final TextView desc;
+        public Customer mItem;
 
         public ViewHolder(View view) {
 
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
-            mImageView = (ImageView) view.findViewById(R.id.product_img);
+            mContentView = (TextView) view.findViewById(R.id.txtEmail);
+            desc = (TextView) view.findViewById(R.id.txtUser);
         }
 
         @Override

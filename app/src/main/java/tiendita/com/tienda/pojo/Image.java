@@ -1,26 +1,51 @@
 
 package tiendita.com.tienda.pojo;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Image {
 
-    private Integer id;
-    private String createdAt;
-    private String updatedAt;
+    private int id;
+    private String dateCreated;
+    private String dateModified;
     private String src;
-    private String title;
+    private String name;
     private String alt;
-    private Integer position;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private int position;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Image() {
+    }
+
+    /**
+     * 
+     * @param position
+     * @param id
+     * @param dateModified
+     * @param alt
+     * @param name
+     * @param dateCreated
+     * @param src
+     */
+    public Image(int id, String dateCreated, String dateModified, String src, String name, String alt, int position) {
+        super();
+        this.id = id;
+        this.dateCreated = dateCreated;
+        this.dateModified = dateModified;
+        this.src = src;
+        this.name = name;
+        this.alt = alt;
+        this.position = position;
+    }
 
     /**
      * 
      * @return
      *     The id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -29,44 +54,44 @@ public class Image {
      * @param id
      *     The id
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * 
      * @return
-     *     The createdAt
+     *     The dateCreated
      */
-    public String getCreatedAt() {
-        return createdAt;
+    public String getDateCreated() {
+        return dateCreated;
     }
 
     /**
      * 
-     * @param createdAt
-     *     The created_at
+     * @param dateCreated
+     *     The date_created
      */
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     /**
      * 
      * @return
-     *     The updatedAt
+     *     The dateModified
      */
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getDateModified() {
+        return dateModified;
     }
 
     /**
      * 
-     * @param updatedAt
-     *     The updated_at
+     * @param dateModified
+     *     The date_modified
      */
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setDateModified(String dateModified) {
+        this.dateModified = dateModified;
     }
 
     /**
@@ -90,19 +115,19 @@ public class Image {
     /**
      * 
      * @return
-     *     The title
+     *     The name
      */
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     /**
      * 
-     * @param title
-     *     The title
+     * @param name
+     *     The name
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -128,7 +153,7 @@ public class Image {
      * @return
      *     The position
      */
-    public Integer getPosition() {
+    public int getPosition() {
         return position;
     }
 
@@ -137,16 +162,8 @@ public class Image {
      * @param position
      *     The position
      */
-    public void setPosition(Integer position) {
+    public void setPosition(int position) {
         this.position = position;
-    }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

@@ -15,16 +15,20 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
+import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
 import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
 import tiendita.com.tienda.api.ProductsAPI;
+import tiendita.com.tienda.api.ProductsOffsetAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.pojo.Product;
-import tiendita.com.tienda.pojo.Products;
 
 /**
  * Created by zero_ on 11/12/2016.
@@ -38,7 +42,8 @@ public class ProductsFragment extends Fragment {
     private ProductInteractionListener mListener;
     private ProductRecyclerViewAdapter adapter;
     private int mColumnCount;
-    private Products products;
+    private int offset = 0;
+    private Product[] products;
 
     public ProductsFragment() {
     }
@@ -47,9 +52,9 @@ public class ProductsFragment extends Fragment {
         requestProgress.setVisibility(View.VISIBLE);
         // Retrieve products
         ProductsAPI api = ServiceGenerator.createAuthenticatedService(ProductsAPI.class, context);
-        api.listProducts().enqueue(new Callback<Products>() {
+        api.listProducts().enqueue(new Callback<Product[]>() {
             @Override
-            public void onResponse(Call<Products> call, Response<Products> response) {
+            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
                 requestProgress.setVisibility(View.GONE);
                 ProductsFragment pf = new ProductsFragment();
                 pf.setProducts(response.body());
@@ -58,7 +63,7 @@ public class ProductsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Products> call, Throwable t) {
+            public void onFailure(Call<Product[]> call, Throwable t) {
                 requestProgress.setVisibility(View.GONE);
                 Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
             }
@@ -92,10 +97,44 @@ public class ProductsFragment extends Fragment {
             recyclerView.setLayoutManager(mLayoutManager);
             adapter = new ProductRecyclerViewAdapter(products, mListener, context);
             recyclerView.setAdapter(adapter);
-            //recyclerView.addOnScrollListener(createInfiniteScrollListener());
+            EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadNextDataFromApi(page);
+                }
+            };
+            recyclerView.addOnScrollListener(scrollListener);
         }
         return view;
     }
+
+    private void loadNextDataFromApi(int page) {
+        ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
+        Map<String, String> params = new HashMap<>();
+        params.put("offset",""+(offset+=10));
+        api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
+            @Override
+            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
+                products = (concat(response.body()));
+                adapter.setProducts(products);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<Product[]> call, Throwable t) {
+                Toast.makeText(getContext(),"No hay mas products",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private Product[] concat(Product[] b) {
+                int bLen = b.length;
+                int aLen = products.length;
+                Product[] c= new Product[aLen+bLen];
+                System.arraycopy(products, 0, c, 0, aLen);
+                System.arraycopy(b, 0, c, aLen, bLen);
+                return c;
+            }
 
     @Override
     public void onAttach(Context context) {
@@ -109,7 +148,7 @@ public class ProductsFragment extends Fragment {
         mListener = null;
     }
 
-    public void setProducts(Products products) {
+    public void setProducts(Product[] products) {
         this.products = products;
     }
 
@@ -139,4 +178,5 @@ public class ProductsFragment extends Fragment {
             startActivity(i);
         }
     }
+
 }
