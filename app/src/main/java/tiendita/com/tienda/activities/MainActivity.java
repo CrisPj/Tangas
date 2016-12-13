@@ -23,6 +23,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import tiendita.com.tienda.R;
+import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
 
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        // Check auth
+        UserData.User.isAuthenticated(getApplicationContext());
     }
 
     @Override

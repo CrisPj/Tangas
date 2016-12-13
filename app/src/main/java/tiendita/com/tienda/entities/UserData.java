@@ -1,5 +1,13 @@
 package tiendita.com.tienda.entities;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
+
+import static tiendita.com.tienda.sqlite.contracts.UserdataContract.Userdata;
+
 /**
  * Created by Cresh on 09/12/2016.
  */
@@ -36,7 +44,9 @@ public final class UserData {
         return rol;
     }
 
-    public long getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
     public static final class User {
         private final String first_name;
@@ -63,6 +73,52 @@ public final class UserData {
 
         public String getAvatar() {
             return avatar;
+        }
+
+        public static boolean isAuthenticated(Context context) {
+            UserdataDbHelper helper = new UserdataDbHelper(context);
+            SQLiteDatabase userDatabase = helper.getReadableDatabase();
+            String[] projection = {
+                    Userdata._ID,
+                    Userdata.COLUMN_NAME_USERNAME,
+                    Userdata.COLUMN_NAME_EMAIL
+            };
+            Cursor query = userDatabase.query(
+                    Userdata.TABLE_NAME,
+                    projection,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+            return query.getCount() >= 1;
+        }
+
+        public static UserData fetchUserdata(Context context) {
+            UserdataDbHelper helper = new UserdataDbHelper(context);
+            SQLiteDatabase userDatabase = helper.getReadableDatabase();
+            String[] projection = {
+                    Userdata._ID,
+                    Userdata.COLUMN_NAME_USERNAME,
+                    Userdata.COLUMN_NAME_EMAIL
+            };
+            Cursor query = userDatabase.query(
+                    Userdata.TABLE_NAME,
+                    projection,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+            String user_id = query.getString(0);
+            String username = query.getString(1);
+            String email = query.getString(2);
+            UserData userData = new UserData("true", Long.valueOf(user_id), username, "", null);
+            return userData;
         }
     }
 }
