@@ -24,54 +24,57 @@ import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
 import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
+import tiendita.com.tienda.adapters.OrderRecyclerViewAdapter;
 import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
+import tiendita.com.tienda.api.OrdersAPI;
 import tiendita.com.tienda.api.ProductsAPI;
 import tiendita.com.tienda.api.ProductsOffsetAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
+import tiendita.com.tienda.pojo.Order;
 import tiendita.com.tienda.pojo.Product;
 
 /**
  * Created by zero_ on 11/12/2016.
  */
 
-public class ProductsFragment extends Fragment {
+public class OrdersFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
-    private ProductInteractionListener mListener;
-    private ProductRecyclerViewAdapter adapter;
+    private OrderInteractionListener mListener;
+    private OrderRecyclerViewAdapter adapter;
     private int mColumnCount;
     private int offset = 0;
-    private Product[] products;
+    private Order[] orders;
 
-    public ProductsFragment() {
+    public OrdersFragment() {
     }
 
-    public static void replaceFragment(final FragmentTransaction ft, final Context context, final ProgressBar requestProgress) {
+    public static void replaceFragment(final FragmentTransaction ft, final Context context, final ProgressBar requestProgress, final String tag) {
         requestProgress.setVisibility(View.VISIBLE);
         // Retrieve products
-        ProductsAPI api = ServiceGenerator.createAuthenticatedService(ProductsAPI.class, context);
-        api.listProducts().enqueue(new Callback<Product[]>() {
+        OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, context);
+        api.listOrders().enqueue(new Callback<Order[]>() {
             @Override
-            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
+            public void onResponse(Call<Order[]> call, Response<Order[]> response) {
                 requestProgress.setVisibility(View.GONE);
-                ProductsFragment pf = new ProductsFragment();
-                pf.setProducts(response.body());
-                ft.replace(R.id.fragment_container, pf);
+                OrdersFragment pf = new OrdersFragment();
+                pf.setOrders(response.body());
+                ft.replace(R.id.fragment_container, pf,tag);
                 ft.commit();
             }
 
             @Override
-            public void onFailure(Call<Product[]> call, Throwable t) {
+            public void onFailure(Call<Order[]> call, Throwable t) {
                 requestProgress.setVisibility(View.GONE);
                 Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public static ProductsFragment newInstance(int itemCount) {
-        ProductsFragment fragment = new ProductsFragment();
+    public static OrdersFragment newInstance(int itemCount) {
+        OrdersFragment fragment = new OrdersFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, itemCount);
         fragment.setArguments(args);
@@ -95,7 +98,7 @@ public class ProductsFragment extends Fragment {
             recyclerView = (RecyclerView) view;
             mLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(mLayoutManager);
-            adapter = new ProductRecyclerViewAdapter(products, mListener, context);
+            adapter = new OrderRecyclerViewAdapter(orders, mListener, context);
             recyclerView.setAdapter(adapter);
             EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
                 @Override
@@ -109,29 +112,29 @@ public class ProductsFragment extends Fragment {
     }
 
     private void loadNextDataFromApi(int page) {
-        ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
         Map<String, String> params = new HashMap<>();
         params.put("offset",""+(offset+=10));
-        api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
+        OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
+        api.listOrders().enqueue(new Callback<Order[]>() {
             @Override
-            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
-                products = (concat(response.body()));
-                adapter.setProducts(products);
+            public void onResponse(Call<Order[]> call, Response<Order[]> response) {
+                orders = (concat(response.body()));
+                adapter.setOrders(orders);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<Product[]> call, Throwable t) {
-                Toast.makeText(getContext(),"No hay mas products",Toast.LENGTH_LONG).show();
+            public void onFailure(Call<Order[]> call, Throwable t) {
+                Toast.makeText(getContext(),"No hay mas ordenes",Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private Product[] concat(Product[] b) {
+    private Order[] concat(Order[] b) {
                 int bLen = b.length;
-                int aLen = products.length;
-                Product[] c= new Product[aLen+bLen];
-                System.arraycopy(products, 0, c, 0, aLen);
+                int aLen = orders.length;
+                Order[] c= new Order[aLen+bLen];
+                System.arraycopy(orders, 0, c, 0, aLen);
                 System.arraycopy(b, 0, c, aLen, bLen);
                 return c;
             }
@@ -139,7 +142,7 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new ProductInteractionListener();
+        mListener = new OrderInteractionListener();
     }
 
     @Override
@@ -148,8 +151,8 @@ public class ProductsFragment extends Fragment {
         mListener = null;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
+    public void setOrders(Order[] orders) {
+        this.orders = orders;
     }
 
     /**
@@ -164,18 +167,18 @@ public class ProductsFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Product item);
+        void onListFragmentInteraction(Order item);
     }
 
-    public class ProductInteractionListener implements OnListFragmentInteractionListener {
+    public class OrderInteractionListener implements OnListFragmentInteractionListener {
 
         @Override
-        public void onListFragmentInteraction(Product item) {
+        public void onListFragmentInteraction(Order item) {
             Gson gson = new Gson();
             String resultado = gson.toJson(item);
-            Intent i = new Intent(getActivity(), OneProductActivity.class);
-            i.putExtra("producto", resultado);
-            startActivity(i);
+            //Intent i = new Intent(getActivity(), OneProductActivity.class);
+            //i.putExtra("producto", resultado);
+            //startActivity(i);
         }
     }
 
