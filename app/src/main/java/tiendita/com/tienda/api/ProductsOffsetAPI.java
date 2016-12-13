@@ -6,7 +6,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 import tiendita.com.tienda.pojo.Product;
-import tiendita.com.tienda.pojo.Products;
 
 /**
  * Created by zero_ on 11/12/2016.

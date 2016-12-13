@@ -1,7 +1,6 @@
 package tiendita.com.tienda.activities;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,8 +26,7 @@ import tiendita.com.tienda.R;
 import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
-import tiendita.com.tienda.pojo.Coupons;
-import tiendita.com.tienda.sqlite.contracts.UserdataContract;
+import tiendita.com.tienda.fragments.UsersFragment;
 import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
 public class MainActivity extends AppCompatActivity
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.inflateMenu(R.menu.activity_main_drawer);
+        navigationView.inflateMenu(R.menu.activity_main_drawer_admin);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -120,6 +118,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.coupons:
                 CouponsFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "CP");
+                setFabIcon(R.drawable.ic_add_white_24dp);
+                break;
+            case R.id.clients:
+                UsersFragment.replaceFragment(ft, getApplicationContext(), requestProgress, "UP");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             default:

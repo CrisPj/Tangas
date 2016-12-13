@@ -1,266 +1,265 @@
 
 package tiendita.com.tienda.pojo;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Customer {
-
-    private Integer id;
-    private String createdAt;
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("date_created")
+    @Expose
+    private String dateCreated;
+    @SerializedName("date_modified")
+    @Expose
+    private String dateModified;
+    @SerializedName("email")
+    @Expose
     private String email;
+    @SerializedName("first_name")
+    @Expose
     private String firstName;
+    @SerializedName("last_name")
+    @Expose
     private String lastName;
+    @SerializedName("username")
+    @Expose
     private String username;
-    private Integer lastOrderId;
-    private String lastOrderDate;
-    private Integer ordersCount;
+    @SerializedName("orders_count")
+    @Expose
+    private int ordersCount;
+    @SerializedName("total_spent")
+    @Expose
     private String totalSpent;
+    @SerializedName("avatar_url")
+    @Expose
     private String avatarUrl;
-    private BillingAddress billingAddress;
-    private ShippingAddress shippingAddress;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @SerializedName("billing")
+    @Expose
+    private Billing billing;
+    @SerializedName("_links")
+    @Expose
+    private Links links;
 
     /**
-     * 
+     *
      * @return
-     *     The id
+     * The id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
     /**
-     * 
+     *
      * @param id
-     *     The id
+     * The id
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The createdAt
+     * The dateCreated
      */
-    public String getCreatedAt() {
-        return createdAt;
+    public String getDateCreated() {
+        return dateCreated;
     }
 
     /**
-     * 
-     * @param createdAt
-     *     The created_at
+     *
+     * @param dateCreated
+     * The date_created
      */
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The email
+     * The dateModified
+     */
+    public String getDateModified() {
+        return dateModified;
+    }
+
+    /**
+     *
+     * @param dateModified
+     * The date_modified
+     */
+    public void setDateModified(String dateModified) {
+        this.dateModified = dateModified;
+    }
+
+    /**
+     *
+     * @return
+     * The email
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * 
+     *
      * @param email
-     *     The email
+     * The email
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The firstName
+     * The firstName
      */
     public String getFirstName() {
         return firstName;
     }
 
     /**
-     * 
+     *
      * @param firstName
-     *     The first_name
+     * The first_name
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The lastName
+     * The lastName
      */
     public String getLastName() {
         return lastName;
     }
 
     /**
-     * 
+     *
      * @param lastName
-     *     The last_name
+     * The last_name
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The username
+     * The username
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * 
+     *
      * @param username
-     *     The username
+     * The username
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
+
     /**
-     * 
+     *
      * @return
-     *     The lastOrderId
+     * The ordersCount
      */
-    public Integer getLastOrderId() {
-        return lastOrderId;
-    }
-
-    /**
-     * 
-     * @param lastOrderId
-     *     The last_order_id
-     */
-    public void setLastOrderId(Integer lastOrderId) {
-        this.lastOrderId = lastOrderId;
-    }
-
-    /**
-     * 
-     * @return
-     *     The lastOrderDate
-     */
-    public String getLastOrderDate() {
-        return lastOrderDate;
-    }
-
-    /**
-     * 
-     * @param lastOrderDate
-     *     The last_order_date
-     */
-    public void setLastOrderDate(String lastOrderDate) {
-        this.lastOrderDate = lastOrderDate;
-    }
-
-    /**
-     * 
-     * @return
-     *     The ordersCount
-     */
-    public Integer getOrdersCount() {
+    public int getOrdersCount() {
         return ordersCount;
     }
 
     /**
-     * 
+     *
      * @param ordersCount
-     *     The orders_count
+     * The orders_count
      */
-    public void setOrdersCount(Integer ordersCount) {
+    public void setOrdersCount(int ordersCount) {
         this.ordersCount = ordersCount;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The totalSpent
+     * The totalSpent
      */
     public String getTotalSpent() {
         return totalSpent;
     }
 
     /**
-     * 
+     *
      * @param totalSpent
-     *     The total_spent
+     * The total_spent
      */
     public void setTotalSpent(String totalSpent) {
         this.totalSpent = totalSpent;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The avatarUrl
+     * The avatarUrl
      */
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
     /**
-     * 
+     *
      * @param avatarUrl
-     *     The avatar_url
+     * The avatar_url
      */
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The billingAddress
+     * The billing
      */
-    public BillingAddress getBillingAddress() {
-        return billingAddress;
+    public Billing getBilling() {
+        return billing;
     }
 
     /**
-     * 
-     * @param billingAddress
-     *     The billing_address
+     *
+     * @param billing
+     * The billing
      */
-    public void setBillingAddress(BillingAddress billingAddress) {
-        this.billingAddress = billingAddress;
+    public void setBilling(Billing billing) {
+        this.billing = billing;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The shippingAddress
+     * The links
      */
-    public ShippingAddress getShippingAddress() {
-        return shippingAddress;
+    public Links getLinks() {
+        return links;
     }
 
     /**
-     * 
-     * @param shippingAddress
-     *     The shipping_address
+     *
+     * @param links
+     * The _links
      */
-    public void setShippingAddress(ShippingAddress shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setLinks(Links links) {
+        this.links = links;
     }
 
 }

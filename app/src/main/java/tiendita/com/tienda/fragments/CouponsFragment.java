@@ -2,7 +2,11 @@ package tiendita.com.tienda.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -24,12 +28,17 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.FieldMap;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.adapters.CouponRecyclerViewAdapter;
 import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
+import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
+import tiendita.com.tienda.api.ProductsAPI;
+import tiendita.com.tienda.api.ProductsOffsetAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.api.WoocommerceAPI;
 import tiendita.com.tienda.pojo.Coupons;
+import tiendita.com.tienda.pojo.Product;
 
 public class CouponsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
