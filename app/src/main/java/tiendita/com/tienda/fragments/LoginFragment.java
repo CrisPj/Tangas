@@ -124,7 +124,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             HashMap<String, String> params = new HashMap<String, String>();
             params.put(KEY_USERNAME, user);
             params.put(KEY_PASSWORD, pass);
-            params.put("alv","true");
+            params.put("alv", "true");
             login.login(params).enqueue(new Callback<UserData>() {
                 @Override
                 public void onResponse(Call<UserData> call, retrofit2.Response<UserData> response) {
