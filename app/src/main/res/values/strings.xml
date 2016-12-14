@@ -111,4 +111,19 @@
     <string name="menu_reportes">Reportes</string>
     <string name="menu_logout">Salir</string>
     <string name="menu_settings">Cuenta</string>
+    <string name="filterDate">Filtrar por:</string>
+    <string name="filterDateDay">Día</string>
+    <string name="filterDateMonth">Mes</string>
+    <string name="filterDateAnnual">Anual</string>
+    <string name="filterDateWeekly">Semanal</string>
+    <string name="totalSalesLabel">Ventas Totales</string>
+    <string name="netSalesLabel">Ventas Netas</string>
+    <string name="averageSalesLabel">Promedio Ventas</string>
+    <string name="totalOrdersLabel">Órdenes Totales</string>
+    <string name="totalItemsLabel">Total Artículos</string>
+    <string name="totalTaxLabel">Total Impuestos</string>
+    <string name="totalShippingLabel">Total de Envios</string>
+    <string name="totalRefundsLabel">Total Reembolsos</string>
+    <string name="totalDiscountLabel">Total Descuentos</string>
+    <string name="totalAmountLabel">Total</string>
 </resources>

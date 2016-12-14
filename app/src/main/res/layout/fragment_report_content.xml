@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/loadingDataProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/reportDataView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="0"
+                android:fontFamily="monospace"
+                android:text="@string/totalSalesLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalSales"
+                android:layout_column="1"
+                android:layout_marginLeft="10dp"
+                android:layout_row="0"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="1"
+                android:fontFamily="monospace"
+                android:text="@string/netSalesLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/netSales"
+                android:layout_column="1"
+                android:layout_marginLeft="10dp"
+                android:layout_row="1"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="2"
+                android:fontFamily="monospace"
+                android:text="@string/averageSalesLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/averageSales"
+                android:layout_column="1"
+                android:layout_marginLeft="10dp"
+                android:layout_row="2"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="3"
+                android:fontFamily="monospace"
+                android:text="@string/totalOrdersLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalOrders"
+                android:layout_column="1"
+                android:layout_marginLeft="10dp"
+                android:layout_row="3"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="4"
+                android:fontFamily="monospace"
+                android:text="@string/totalItemsLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalItems"
+                android:layout_column="1"
+                android:layout_marginLeft="10dp"
+                android:layout_row="4"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="5"
+                android:fontFamily="monospace"
+                android:text="@string/totalTaxLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalTax"
+                android:layout_column="1"
+                android:layout_marginLeft="10sp"
+                android:layout_row="5"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="6"
+                android:fontFamily="monospace"
+                android:text="@string/totalShippingLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalShipping"
+                android:layout_column="1"
+                android:layout_marginLeft="10sp"
+                android:layout_row="6"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="7"
+                android:fontFamily="monospace"
+                android:text="@string/totalRefundsLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalRefunds"
+                android:layout_column="1"
+                android:layout_marginLeft="10sp"
+                android:layout_row="7"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="8"
+                android:fontFamily="monospace"
+                android:text="@string/totalDiscountLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalDiscount"
+                android:layout_column="1"
+                android:layout_marginLeft="10sp"
+                android:layout_row="8"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_row="10"
+                android:fontFamily="monospace"
+                android:text="@string/totalAmountLabel"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_column="1"
+                android:layout_marginLeft="10sp"
+                android:layout_row="10"
+                android:fontFamily="monospace"
+                android:text="no data"
+                android:textColor="@color/redColor"
+                android:textSize="16sp" />
+
+        </GridLayout>
+    </RelativeLayout>
+</ScrollView>
