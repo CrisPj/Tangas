@@ -24,19 +24,27 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tiendita.com.tienda.R;
+import tiendita.com.tienda.api.CustomersAPI;
+import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.fragments.CategoriesFragment;
 import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
+import tiendita.com.tienda.fragments.ProfileFragment;
 import tiendita.com.tienda.fragments.ReportsFragment;
 import tiendita.com.tienda.fragments.UsersFragment;
+import tiendita.com.tienda.pojo.Customer;
 import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
 public class MainActivity extends AppCompatActivity
@@ -161,6 +169,29 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.coupons:
                 CouponsFragment.replaceFragment(ft, "CP");
+                setFabIcon(R.drawable.ic_add_white_24dp);
+                break;
+            case R.id.settings:
+                String resultado = "";
+
+                CustomersAPI api = ServiceGenerator.createAuthenticatedService(CustomersAPI.class, getApplicationContext());
+                int id_cur = (int) UserData.User.fetchUserdata(getApplicationContext()).getId();
+                api.getCustomer(id_cur).enqueue(new Callback<Customer>() {
+                    @Override
+                    public void onResponse(Call<Customer> call, Response<Customer> response) {
+                        final Gson gson = new Gson();
+                        String resultado = gson.toJson(response.body());
+                        Intent i = new Intent(MainActivity.this, CustomerActivity.class);
+                        i.putExtra("customer", resultado);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Customer> call, Throwable t) {
+
+                    }
+                });
+
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.clients:
