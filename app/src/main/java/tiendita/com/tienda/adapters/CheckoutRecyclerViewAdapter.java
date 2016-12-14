@@ -44,7 +44,7 @@ public class CheckoutRecyclerViewAdapter extends RecyclerView.Adapter<CheckoutRe
         holder.mItem = products[position];
         holder.mIdView.setText("" + holder.mItem.getQuantity());
 
-        holder.mContentView.setText(product.getProductId());
+        holder.mContentView.setText(""+product.getProductId());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

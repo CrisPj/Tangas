@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,25 +15,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
 import tiendita.com.tienda.adapters.CheckoutRecyclerViewAdapter;
-import tiendita.com.tienda.adapters.CouponRecyclerViewAdapter;
-import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
-import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
-import tiendita.com.tienda.api.ProductsAPI;
-import tiendita.com.tienda.api.ProductsOffsetAPI;
-import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.pojo.CarritoHax;
 import tiendita.com.tienda.pojo.LineItem;
 import tiendita.com.tienda.pojo.Product;
@@ -42,29 +29,23 @@ import tiendita.com.tienda.pojo.Product;
  * Created by zero_ on 11/12/2016.
  */
 
-public class CheckoutFragment extends CustomFragment
+public class CheckoutFragment extends Fragment
 {
 
     private LineItem[] products;
     private CheckoutFragment.CheckoutInteractionListener mListener;
     private CheckoutRecyclerViewAdapter adapter;
+    View progressContainer;
+    RecyclerView recyclerView;
+    LinearLayoutManager mLayoutManager;
 
     public CheckoutFragment() {
-    }
-
-    public static void replaceFragment(final FragmentTransaction ft,String tag) {
-        CheckoutFragment chf = new CheckoutFragment();
-        ft.replace(R.id.fragment_container, chf,tag);
-        ft.commit();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new CheckoutRecyclerViewAdapter(products, mListener, getContext());
-        recyclerView.setAdapter(adapter);
-        products = CarritoHax.getItems();
-        progressContainer.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -75,6 +56,11 @@ public class CheckoutFragment extends CustomFragment
         recyclerView = (RecyclerView) view.findViewById(R.id.RecyclerView);
         mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
+        adapter = new CheckoutRecyclerViewAdapter(products, mListener, getContext());
+        products = CarritoHax.getItems();
+        adapter.setProducts(products);
+        progressContainer.setVisibility(View.GONE);
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -131,10 +117,6 @@ public class CheckoutFragment extends CustomFragment
         alert.show();
     }
 
-    @Override
-    void loadNextDataFromApi(int offset) {
-
-    }
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name

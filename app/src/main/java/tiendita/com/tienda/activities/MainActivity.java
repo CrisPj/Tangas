@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,7 @@ import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.fragments.CategoriesFragment;
 import tiendita.com.tienda.fragments.CheckoutFragment;
 import tiendita.com.tienda.fragments.CouponsFragment;
+import tiendita.com.tienda.fragments.CustomFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.Orders2Fragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
@@ -302,17 +304,11 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view,"crear cuentas",Snackbar.LENGTH_SHORT).show();
                 break;
             case "PP":
-                Snackbar snack = Snackbar.make(view, "Tienes " + CarritoHax.cantItems() + " productos en el carro", Snackbar.LENGTH_SHORT)
-                        .setAction("CheckOut", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Toast.makeText(MainActivity.this, "Saltar la compra", Toast.LENGTH_SHORT).show();
-                                FragmentManager manager = getSupportFragmentManager();
-                                FragmentTransaction ft = manager.beginTransaction();
-                                CheckoutFragment.replaceFragment(ft, "CPF");
-                            }
-                        });
-                snack.show();
+                CheckoutFragment rf = new CheckoutFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, rf,"CHE").commit();
+                break;
+            case "CHE":
+                Toast.makeText(getApplicationContext(),"Sale pa cupon y para pagar",Toast.LENGTH_LONG);
                 break;
             default:
                 Snackbar.make(view, "Not sure what to do...my bad", Snackbar.LENGTH_SHORT).show();

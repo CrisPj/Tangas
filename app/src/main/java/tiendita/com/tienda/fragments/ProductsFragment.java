@@ -55,6 +55,7 @@ public class ProductsFragment extends CustomFragment
     public static void replaceFragment(final FragmentTransaction ft,String tag) {
         ProductsFragment pf = new ProductsFragment();
         ft.replace(R.id.fragment_container, pf,tag);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
