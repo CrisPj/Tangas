@@ -2,7 +2,6 @@ package tiendita.com.tienda.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -26,35 +25,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tiendita.com.tienda.R;
-import tiendita.com.tienda.activities.OneProductActivity;
-import tiendita.com.tienda.adapters.CouponRecyclerViewAdapter;
+import tiendita.com.tienda.adapters.CategoryRecyclerViewAdapter;
 import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
-import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
 import tiendita.com.tienda.api.ProductsAPI;
-import tiendita.com.tienda.api.ProductsOffsetAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
-import tiendita.com.tienda.api.WoocommerceAPI;
-import tiendita.com.tienda.pojo.Coupons;
-import tiendita.com.tienda.pojo.Product;
-import tiendita.com.tienda.pojo.Products;
+import tiendita.com.tienda.pojo.Category;
+
 
 /**
  * Created by zero_ on 11/12/2016.
  */
 
-public class ProductsFragment extends CustomFragment
+public class CategoriesFragment extends CustomFragment
 {
 
-    private Product[] products;
-    private ProductsFragment.ProductInteractionListener mListener;
-    private ProductRecyclerViewAdapter adapter;
+    private Category[] categories;
+    private CategoriesFragment.CategoryInteractionListener mListener;
+    private CategoryRecyclerViewAdapter adapter;
 
-    public ProductsFragment() {
+    public CategoriesFragment() {
     }
 
     public static void replaceFragment(final FragmentTransaction ft,String tag) {
-        ProductsFragment pf = new ProductsFragment();
-        ft.replace(R.id.fragment_container, pf,tag);
+        CategoriesFragment cf = new CategoriesFragment();
+        ft.replace(R.id.fragment_container, cf,tag);
         ft.commit();
     }
 
@@ -62,11 +56,11 @@ public class ProductsFragment extends CustomFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ProductsAPI api = ServiceGenerator.createAuthenticatedService(ProductsAPI.class, getContext());
-        api.listProducts().enqueue(new Callback<Product[]>() {
+        api.listCategories().enqueue(new Callback<Category[]>() {
             @Override
-            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
-                products = response.body();
-                adapter = new ProductRecyclerViewAdapter(products, mListener, getContext());
+            public void onResponse(Call<Category[]> call, Response<Category[]> response) {
+                categories = response.body();
+                adapter = new CategoryRecyclerViewAdapter(categories, mListener, getContext());
                 recyclerView.setAdapter(adapter);
                 EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
                     @Override
@@ -79,7 +73,7 @@ public class ProductsFragment extends CustomFragment
             }
 
             @Override
-            public void onFailure(Call<Product[]> call, Throwable t) {
+            public void onFailure(Call<Category[]> call, Throwable t) {
 
             }
         });
@@ -97,20 +91,20 @@ public class ProductsFragment extends CustomFragment
     }
 
     void loadNextDataFromApi(int page) {
-        ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
+        ProductsAPI api = ServiceGenerator.createAuthenticatedService(ProductsAPI.class, getContext());
         Map<String, String> params = new HashMap<>();
         params.put("offset", "" + (offset += 10));
-        api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
+        api.listCategories(params).enqueue(new Callback<Category[]>() {
             @Override
-            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
-                products = (concat(products,response.body()));
-                adapter.setProducts(products);
+            public void onResponse(Call<Category[]> call, Response<Category[]> response) {
+                categories = (concat(categories,response.body()));
+                adapter.setCategories(categories);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<Product[]> call, Throwable t) {
-                Toast.makeText(getContext(), "No hay mas products", Toast.LENGTH_LONG).show();
+            public void onFailure(Call<Category[]> call, Throwable t) {
+                Toast.makeText(getContext(), "No hay mas categories", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -118,7 +112,7 @@ public class ProductsFragment extends CustomFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new ProductInteractionListener();
+        mListener = new CategoryInteractionListener();
     }
 
     @Override
@@ -127,11 +121,11 @@ public class ProductsFragment extends CustomFragment
         mListener = null;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
+    public void setCategories(Category[] categories) {
+        this.categories = categories;
     }
 
-    public void addProduct() {
+    public void addCategory() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
         alert.setTitle("Nuevo Producto ");
 
@@ -160,7 +154,7 @@ public class ProductsFragment extends CustomFragment
             public void onClick(DialogInterface dialog, int whichButton) {
                 String m_Text = input.getText().toString();
                 String percen = percentage.getText().toString();
-                Product nuevo = new Product();
+                //Product nuevo = new Product();
             }
         });
 
@@ -170,16 +164,16 @@ public class ProductsFragment extends CustomFragment
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Product item);
+        void onListFragmentInteraction(Category item);
     }
-    public class ProductInteractionListener implements OnListFragmentInteractionListener {
+    public class CategoryInteractionListener implements OnListFragmentInteractionListener {
         @Override
-        public void onListFragmentInteraction(Product item) {
+        public void onListFragmentInteraction(Category item) {
             Gson gson = new Gson();
             String resultado = gson.toJson(item);
-            Intent i = new Intent(getActivity(), OneProductActivity.class);
-            i.putExtra("producto", resultado);
-            startActivity(i);
+//            Intent i = new Intent(getActivity(), OneProductActivity.class);
+//            i.putExtra("producto", resultado);
+//            startActivity(i);
         }
     }
 
