@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -39,6 +40,7 @@ import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
 import tiendita.com.tienda.fragments.ReportsFragment;
 import tiendita.com.tienda.fragments.UsersFragment;
+import tiendita.com.tienda.pojo.CarritoHax;
 import tiendita.com.tienda.pojo.Customer;
 import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
@@ -294,6 +296,16 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "PF":
                 ((ProductsFragment) currentFragment).addProduct();
+                break;
+            case "PP":
+                Snackbar snack = Snackbar.make(view, "Tienes " + CarritoHax.cantItems() + " productos en el carro", Snackbar.LENGTH_SHORT)
+                        .setAction("CheckOut", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(MainActivity.this, "Saltar la compra", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                snack.show();
                 break;
             default:
                 Snackbar.make(view, "Not sure what to do...my bad", Snackbar.LENGTH_SHORT).show();
