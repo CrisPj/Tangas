@@ -1,10 +1,18 @@
 
 package tiendita.com.tienda.pojo;
 
-import org.json.JSONArray;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +44,17 @@ public class SalesReport {
         this.totalRefunds = jsonObject.optInt("total_refunds");
         this.totalDiscount = jsonObject.optString("total_discount");
         this.totalsGroupedBy = jsonObject.optString("totals_grouped_by");
-        JSONArray jsonArray = jsonObject.optJSONArray("totals");
+        JSONObject jsonTotals = jsonObject.optJSONObject("totals");
+        // Init totals
+        this.totals = new ArrayList<>();
+        // Build totals
+        Iterator<?> keys = jsonTotals.keys();
+        while (keys.hasNext()) {
+            String key = (String) keys.next();
+            JSONObject currentTotal = jsonTotals.optJSONObject(key);
+            if (currentTotal instanceof JSONObject)
+                this.totals.add(new Total(currentTotal, key));
+        }
     }
 
     /**
@@ -229,4 +247,143 @@ public class SalesReport {
         this.additionalProperties.put(name, value);
     }
 
+    public BarDataSet getSalesDataset(String label) {
+        // Create List of Entries
+        List<BarEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            BarEntry entry = new BarEntry(i, Float.parseFloat(total.getSales()), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        BarDataSet dataset = new BarDataSet(entries, "Ventas");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public PieDataSet getPieSalesDataset() {
+        // Create List of Entries
+        List<PieEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            PieEntry entry = new PieEntry(Float.parseFloat(total.getSales()), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        PieDataSet dataset = new PieDataSet(entries, "Ventas");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public BarDataSet getItemsDataset(String label) {
+        // Create List of Entries
+        List<BarEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            BarEntry entry = new BarEntry(i, total.getItems(), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        BarDataSet dataset = new BarDataSet(entries, "Artículos");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public PieDataSet getPieItemsDataset() {
+        // Create List of Entries
+        List<PieEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            PieEntry entry = new PieEntry(total.getItems(), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        PieDataSet dataset = new PieDataSet(entries, "Artículos");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public BarDataSet getOrdersDataset(String period) {
+        // Create List of Entries
+        List<BarEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            BarEntry entry = new BarEntry(i, total.getOrders(), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        BarDataSet dataset = new BarDataSet(entries, "Órdenes");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public PieDataSet getPieOrdersDataset() {
+        // Create List of Entries
+        List<PieEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            PieEntry entry = new PieEntry(total.getOrders(), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        PieDataSet dataset = new PieDataSet(entries, "Órdenes");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public IBarDataSet getAverageDataset(String period) {
+        // Create List of Entries
+        List<BarEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            BarEntry entry = new BarEntry(i, Float.parseFloat(total.getShipping()), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        BarDataSet dataset = new BarDataSet(entries, "Promedio");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public PieDataSet getPieAverageDataset() {
+        // Create List of Entries
+        List<PieEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            PieEntry entry = new PieEntry(Float.parseFloat(total.getShipping()), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        PieDataSet dataset = new PieDataSet(entries, "Promedio");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public BarDataSet getTaxDataset(String period) {
+        // Create List of Entries
+        List<BarEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            BarEntry entry = new BarEntry(i, Float.parseFloat(total.getTax()), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        BarDataSet dataset = new BarDataSet(entries, "Impuestos");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
+
+    public PieDataSet getPieTaxDataset() {
+        // Create List of Entries
+        List<PieEntry> entries = new ArrayList<>(totals.size());
+        int i = 0;
+        for (Total total : totals) {
+            PieEntry entry = new PieEntry(Float.parseFloat(total.getTax()), total.getDate());
+            entries.add(entry);
+            i++;
+        }
+        PieDataSet dataset = new PieDataSet(entries, "Impuestos");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        return dataset;
+    }
 }

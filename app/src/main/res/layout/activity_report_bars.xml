@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="tiendita.com.tienda.activities.ReportBars">
+
+    <TableLayout
+        android:id="@+id/activity_report_bars"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:text="Ventas"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/graficaBarras"
+            android:layout_width="match_parent"
+            android:layout_height="300sp" />
+
+        <TextView
+            android:text="Artículos"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/graficaBarrasArtículos"
+            android:layout_width="match_parent"
+            android:layout_height="300sp" />
+
+        <TextView
+            android:text="Órdenes"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/graficaBarrasOrdenes"
+            android:layout_width="match_parent"
+            android:layout_height="300sp" />
+
+        <TextView
+            android:text="Promedio Ventas"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/graficaBarrasPromedio"
+            android:layout_width="match_parent"
+            android:layout_height="300sp" />
+
+        <TextView
+            android:text="Impuestos"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/graficaBarrasImpuestos"
+            android:layout_width="match_parent"
+            android:layout_height="300sp" />
+
+    </TableLayout>
+</ScrollView>

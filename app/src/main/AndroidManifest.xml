@@ -43,8 +43,9 @@
         <activity
             android:name=".activities.CustomerActivity"
             android:label="Edicion de Customer"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.ReportBars" />
+        <activity android:name=".activities.ReportPie"></activity>
     </application>
 
 </manifest>

@@ -32,6 +32,13 @@
                 android:text="@string/filterDateWeekly" />
 
             <RadioButton
+                android:id="@+id/lastMonthFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filterDateLastMonth"
+                />
+
+            <RadioButton
                 android:id="@+id/monthlyFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -43,22 +43,33 @@ public class ReportsFragment extends Fragment {
                     datePicker.show(getFragmentManager(), "datePicker");
                     break;
                 case R.id.monthlyFilter:
-                    datePicker.setDateSetListener(new DateSetListener(TYPE.MONTH));
-                    datePicker.show(getFragmentManager(), "datePicker");
+                    fetchPeriod(TYPE.MONTH);
+                    break;
+                case R.id.lastMonthFilter:
+                    fetchPeriod(TYPE.LAST_MONTH);
                     break;
                 case R.id.annualFilter:
-                    datePicker.setDateSetListener(new DateSetListener(TYPE.ANNUAL));
-                    datePicker.show(getFragmentManager(), "datePicker");
+                    fetchPeriod(TYPE.ANNUAL);
                     break;
                 default:
                     Toast.makeText(getContext(), "No option selected", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
+
+        public void fetchPeriod(TYPE type) {
+            Bundle args = new Bundle();
+            args.putString(ReportDataFragment.TYPE, String.valueOf(type));
+            ReportDataFragment dataFragment = new ReportDataFragment();
+            dataFragment.setArguments(args);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.report_fragment, dataFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     enum TYPE {
-        WEEK, MONTH, ANNUAL
+        WEEK, MONTH, ANNUAL, LAST_MONTH
     }
 
     public class DateSetListener implements DatePickerDialog.OnDateSetListener {
@@ -82,9 +93,7 @@ public class ReportsFragment extends Fragment {
             // Put in on args
             args.putString(ReportDataFragment.DATE_MIN, date);
             args.putString(ReportDataFragment.TYPE, String.valueOf(type));
-
             ReportDataFragment dataFragment = new ReportDataFragment();
-
             dataFragment.setArguments(args);
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.report_fragment, dataFragment);

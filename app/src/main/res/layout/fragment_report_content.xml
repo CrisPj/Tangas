@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <RelativeLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/loadingDataProgress"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingTop="50sp" />
 
         <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/reportDataView"
@@ -184,6 +185,18 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/barGraphics"
+                android:layout_column="0"
+                android:layout_row="9"
+                android:text="@string/reportGraphicsBar" />
+
+            <Button
+                android:id="@+id/pieGraphics"
+                android:layout_column="1"
+                android:layout_row="9"
+                android:text="@string/reportGraphicsPie" />
+
         </GridLayout>
-    </RelativeLayout>
+    </TableLayout>
 </ScrollView>

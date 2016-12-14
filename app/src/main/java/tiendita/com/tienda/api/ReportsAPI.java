@@ -14,6 +14,6 @@ public interface ReportsAPI {
     Call<String> getReportWeekly(@Query("date_min") String date_min);
 
     @GET("wp-json/wc/v1/reports/sales")
-    Call<String> getReportMonthly(@Query("date_min") String date_min, @Query("period") String period);
+    Call<String> getReportPeriod(@Query("period") String period);
 
 }

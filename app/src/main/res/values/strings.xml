@@ -126,4 +126,7 @@
     <string name="totalRefundsLabel">Total Reembolsos</string>
     <string name="totalDiscountLabel">Total Descuentos</string>
     <string name="totalAmountLabel">Total</string>
+    <string name="filterDateLastMonth">Mes pasado</string>
+    <string name="reportGraphicsBar">Gráfico Barras</string>
+    <string name="reportGraphicsPie">Gráfico Pastel</string>
 </resources>
