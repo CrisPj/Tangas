@@ -1,27 +1,27 @@
 package tiendita.com.tienda.pojo;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Cresh on 14/12/2016.
  */
 
 public final class CarritoHax {
 
-    private static LineItem[] carrito = new LineItem[0];
+    private static List<LineItem> carrito = new ArrayList<>();
 
     public static void add2Carrito(LineItem nuevo)
     {
-        int aLen = carrito.length;
-        LineItem[] c = new LineItem[aLen+1];
-        System.arraycopy(carrito, 0, c, 0, aLen);
-        c[aLen] = nuevo;
-        carrito = c;
+        carrito.add(nuevo);
     }
 
     public static int cantItems()
     {
-        return carrito.length;
+        return carrito.size();
     }
 
-    public static LineItem[] getItems() {
+    public static List<LineItem> getItems() {
         return carrito;
     }
 }

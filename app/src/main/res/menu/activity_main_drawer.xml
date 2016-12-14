@@ -11,9 +11,11 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_login" />
         <item
+            android:visible="false"
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Registrarse" />
     </group>
 
 </menu>
+

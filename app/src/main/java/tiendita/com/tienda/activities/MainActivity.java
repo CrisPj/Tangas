@@ -13,11 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -36,14 +36,12 @@ import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.fragments.CategoriesFragment;
 import tiendita.com.tienda.fragments.CheckoutFragment;
 import tiendita.com.tienda.fragments.CouponsFragment;
-import tiendita.com.tienda.fragments.CustomFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.Orders2Fragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
 import tiendita.com.tienda.fragments.ReportsFragment;
 import tiendita.com.tienda.fragments.UsersFragment;
-import tiendita.com.tienda.pojo.CarritoHax;
 import tiendita.com.tienda.pojo.Customer;
 import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
@@ -83,23 +81,17 @@ public class MainActivity extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         // Check auth
-        if (UserData.User.isAuthenticated(getApplicationContext()))
-        {
+        if (UserData.User.isAuthenticated(getApplicationContext())) {
             UserData user = UserData.User.fetchUserdata(getApplicationContext());
             long id = user.getId();
-            if (user.getRol().equals("administrator"))
-            {
+            if (user.getRol().equals("administrator")) {
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer_admin);
-            }
-            else
-            {
+            } else {
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer_silvestre);
             }
-        }
-        else
-        {
+        } else {
             userdataDbHelper = new UserdataDbHelper(getApplicationContext());
         }
     }
@@ -145,15 +137,15 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = manager.beginTransaction();
         switch (id) {
             case R.id.products:
-                ProductsFragment.replaceFragment(ft,"PP");
+                ProductsFragment.replaceFragment(ft, "PP");
                 setFabIcon(R.drawable.ic_add_shopping_cart_black_24dp);
                 break;
             case R.id.admin_products:
-                ProductsFragment.replaceFragment(ft,"PF");
+                ProductsFragment.replaceFragment(ft, "PF");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.categories:
-                CategoriesFragment.replaceFragment(ft,"CF");
+                CategoriesFragment.replaceFragment(ft, "CF");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.order:
@@ -301,14 +293,14 @@ public class MainActivity extends AppCompatActivity
                 ((ProductsFragment) currentFragment).addProduct();
                 break;
             case "CPF":
-                Snackbar.make(view,"crear cuentas",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, "crear cuentas", Snackbar.LENGTH_SHORT).show();
                 break;
             case "PP":
                 CheckoutFragment rf = new CheckoutFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, rf,"CHE").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, rf, "GH").commit();
                 break;
-            case "CHE":
-                Toast.makeText(getApplicationContext(),"Sale pa cupon y para pagar",Toast.LENGTH_LONG);
+            case "GH":
+                Toast.makeText(getApplicationContext(), "Sale pa cupon y para pagar", Toast.LENGTH_LONG).show();
                 break;
             default:
                 Snackbar.make(view, "Not sure what to do...my bad", Snackbar.LENGTH_SHORT).show();

@@ -34,6 +34,7 @@ import tiendita.com.tienda.api.CustomersAPI;
 import tiendita.com.tienda.api.OrdersAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.entities.UserData;
+import tiendita.com.tienda.pojo.CarritoHax;
 import tiendita.com.tienda.pojo.Customer;
 import tiendita.com.tienda.pojo.Order;
 
@@ -142,17 +143,9 @@ public class Orders2Fragment extends CustomFragment {
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        final TextView txtTicket = new TextView(this.getContext());
-        txtTicket.setText("Customer:");
-        layout.addView(txtTicket);
-
-        final EditText input = new EditText(this.getContext());
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        layout.addView(input);
-
-        final TextView txtNumber = new TextView(this.getContext());
-        txtNumber.setText("Producto");
-        layout.addView(txtNumber);
+        final TextView user = new TextView(this.getContext());
+        user.setText("Usuario");
+        layout.addView(user);
 
         final EditText percentage = new EditText(this.getContext());
         percentage.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -162,17 +155,16 @@ public class Orders2Fragment extends CustomFragment {
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String m_Text = input.getText().toString();
-                String percen = percentage.getText().toString();
                 Order nuevo = new Order();
+                nuevo.setLineItems(CarritoHax.getItems());
                 OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
                 api.addOrder(nuevo).enqueue(new Callback<Order>() {
                     @Override
                     public void onResponse(Call<Order> call, Response<Order> response) {
                         Toast.makeText(getContext(),"Creado correctamente",Toast.LENGTH_LONG).show();
                         orders = (concat(orders,response.body()));
-                        ((OrderRecyclerViewAdapter)adapter).setOrders(orders);
-                        ((OrderRecyclerViewAdapter)adapter).notifyDataSetChanged();
+                        adapter.setOrders(orders);
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override

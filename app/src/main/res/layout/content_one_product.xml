@@ -5,6 +5,7 @@
     android:id="@+id/content_one_product"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tiendita.com.tienda.activities.OneProductActivity"
     tools:showIn="@layout/activity_one_product">
@@ -41,9 +42,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
                     android:layout_marginStart="10dp"
+                    android:fontFamily="monospace"
                     android:text="name"
                     android:textAppearance="?attr/textAppearanceListItem"
-                    android:textColor="?attr/colorPrimary" />
+                    android:textColor="@color/colorAccent" />
 
                 <TextView
                     android:id="@+id/pdesc"
@@ -51,17 +53,27 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
                     android:layout_marginStart="10dp"
+                    android:fontFamily="monospace"
                     android:text="desc"
                     android:textAppearance="?attr/textAppearanceListItem"
-                    android:textColor="?attr/colorPrimary" />
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="Precio"
+                    android:textColor="@color/whiteColor" />
 
                 <TextView
                     android:id="@+id/pprecio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
+                    android:fontFamily="monospace"
                     android:text="precio"
-                    android:textAppearance="?attr/textAppearanceListItem" />
+                    android:textColor="@color/colorAccent" />
             </LinearLayout>
         </LinearLayout>
 

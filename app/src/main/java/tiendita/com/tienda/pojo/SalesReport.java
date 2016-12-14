@@ -382,7 +382,7 @@ public class SalesReport {
             entries.add(entry);
             i++;
         }
-        PieDataSet dataset = new PieDataSet(entries, "Impuestos");
+        PieDataSet dataset = new PieDataSet(entries, "Impuestos ");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
         return dataset;
     }

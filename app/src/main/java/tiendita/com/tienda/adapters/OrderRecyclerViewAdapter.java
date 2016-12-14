@@ -13,10 +13,8 @@ import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.api.CustomersAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
-import tiendita.com.tienda.fragments.Orders2Fragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.pojo.Customer;
-import tiendita.com.tienda.pojo.Customers;
 import tiendita.com.tienda.pojo.Order;
 
 /**
@@ -45,14 +43,12 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
         Order order = orders[position];
-
 
         holder.mItem = orders[position];
         holder.txtid.setText("" + holder.mItem.getId());
 
-        CustomersAPI api = ServiceGenerator.createAuthenticatedService(CustomersAPI.class,context);
+        CustomersAPI api = ServiceGenerator.createAuthenticatedService(CustomersAPI.class, context);
         api.getCustomer(order.getCustomerId()).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {

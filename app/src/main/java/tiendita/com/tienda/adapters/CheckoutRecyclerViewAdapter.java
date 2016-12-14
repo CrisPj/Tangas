@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import java.util.List;
 
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.fragments.CheckoutFragment;
@@ -19,11 +20,11 @@ import tiendita.com.tienda.pojo.LineItem;
 
 public class CheckoutRecyclerViewAdapter extends RecyclerView.Adapter<CheckoutRecyclerViewAdapter.ViewHolder> {
 
-    private LineItem[] products;
+    private List<LineItem> products;
     private CheckoutFragment.CheckoutInteractionListener mListener;
     private Context context;
 
-    public CheckoutRecyclerViewAdapter(LineItem[] products, CheckoutFragment.CheckoutInteractionListener mListener, Context context) {
+    public CheckoutRecyclerViewAdapter(List<LineItem> products, CheckoutFragment.CheckoutInteractionListener mListener, Context context) {
         this.products = products;
         this.mListener = mListener;
         this.context = context;
@@ -39,9 +40,9 @@ public class CheckoutRecyclerViewAdapter extends RecyclerView.Adapter<CheckoutRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        LineItem product = products[position];
+        LineItem product = products.get(position);
 
-        holder.mItem = products[position];
+        holder.mItem = products.get(position);
         holder.mIdView.setText("" + holder.mItem.getQuantity());
 
         holder.mContentView.setText(""+product.getProductId());
@@ -60,10 +61,10 @@ public class CheckoutRecyclerViewAdapter extends RecyclerView.Adapter<CheckoutRe
 
     @Override
     public int getItemCount() {
-        return products.length;
+        return products.size();
     }
 
-    public void setProducts(LineItem[] products) {
+    public void setProducts(List<LineItem> products) {
         this.products = products;
     }
 

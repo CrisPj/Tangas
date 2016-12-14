@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
 import tiendita.com.tienda.adapters.CheckoutRecyclerViewAdapter;
@@ -32,7 +34,7 @@ import tiendita.com.tienda.pojo.Product;
 public class CheckoutFragment extends Fragment
 {
 
-    private LineItem[] products;
+    private List<LineItem> products;
     private CheckoutFragment.CheckoutInteractionListener mListener;
     private CheckoutRecyclerViewAdapter adapter;
     View progressContainer;
@@ -76,7 +78,7 @@ public class CheckoutFragment extends Fragment
         mListener = null;
     }
 
-    public void setProducts(LineItem[] products) {
+    public void setProducts(List<LineItem> products) {
         this.products = products;
     }
 

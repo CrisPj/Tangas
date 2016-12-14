@@ -9,6 +9,9 @@ public class Order {
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("line_items")
+    @Expose
+    private List<LineItem> lineItems = null;
     @SerializedName("parent_id")
     @Expose
     private int parentId;
@@ -698,4 +701,11 @@ public class Order {
         this.links = links;
     }
 
+    public List<LineItem> getLineItems() {
+        return lineItems;
+    }
+
+    public void setLineItems(List<LineItem> lineItems) {
+        this.lineItems = lineItems;
+    }
 }

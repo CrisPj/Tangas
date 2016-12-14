@@ -37,11 +37,13 @@
                 <AutoCompleteTextView
                     android:id="@+id/user"
                     android:layout_width="match_parent"
+                    android:fontFamily="monospace"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_user"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/colorAccent" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -50,6 +52,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:fontFamily="monospace"
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,11 +62,13 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/colorAccent" />
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:fontFamily="monospace"
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"

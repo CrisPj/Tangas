@@ -7,6 +7,7 @@
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -32,15 +33,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:textColor="?attr/colorPrimary"
+                android:fontFamily="monospace"
+                android:textColor="@color/colorAccent"
                 android:layout_marginStart="10dp"
                 android:text="name"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
                 android:id="@+id/id"
+                android:fontFamily="monospace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
                 android:layout_margin="@dimen/text_margin"
                 android:text="id"
                 android:textAppearance="?attr/textAppearanceListItem" />
