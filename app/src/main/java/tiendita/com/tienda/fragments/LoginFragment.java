@@ -32,7 +32,8 @@ import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.sqlite.contracts.UserdataContract;
 import tiendita.com.tienda.sqlite.helpers.UserdataDbHelper;
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class
+LoginFragment extends Fragment implements View.OnClickListener {
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";

@@ -11,6 +11,7 @@ public class UserdataContract {
         public static final String TABLE_NAME = "user_data";
         public static final String COLUMN_NAME_USERNAME = "username";
         public static final String COLUMN_NAME_EMAIL = "email";
+        public static final String COLUMN_NAME_ROLES = "rol";
     }
 
 }
