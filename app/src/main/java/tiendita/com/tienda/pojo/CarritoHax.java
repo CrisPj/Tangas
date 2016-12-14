@@ -20,4 +20,8 @@ public final class CarritoHax {
     {
         return carrito.length;
     }
+
+    public static LineItem[] getItems() {
+        return carrito;
+    }
 }

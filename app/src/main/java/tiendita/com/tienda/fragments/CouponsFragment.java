@@ -111,8 +111,8 @@ public class CouponsFragment extends CustomFragment {
     }
 
     public static void replaceFragment(final FragmentTransaction ft, final String cp) {
-        CouponsFragment pf = new CouponsFragment();
-        ft.replace(R.id.fragment_container, pf,cp);
+        CouponsFragment cof = new CouponsFragment();
+        ft.replace(R.id.fragment_container, cof,cp);
         ft.commit();
     }
 

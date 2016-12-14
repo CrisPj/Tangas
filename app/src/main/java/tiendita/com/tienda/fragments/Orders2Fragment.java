@@ -51,8 +51,8 @@ public class Orders2Fragment extends CustomFragment {
     }
 
     public static void replaceFragment(final FragmentTransaction ft, final String tag) {
-        Orders2Fragment pf = new Orders2Fragment();
-        ft.replace(R.id.fragment_container, pf,tag);
+        Orders2Fragment o2f = new Orders2Fragment();
+        ft.replace(R.id.fragment_container, o2f,tag);
         ft.commit();
     }
 

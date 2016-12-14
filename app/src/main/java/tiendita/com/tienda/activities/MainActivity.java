@@ -33,6 +33,7 @@ import tiendita.com.tienda.api.CustomersAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
 import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.fragments.CategoriesFragment;
+import tiendita.com.tienda.fragments.CheckoutFragment;
 import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.Orders2Fragment;
@@ -297,12 +298,18 @@ public class MainActivity extends AppCompatActivity
             case "PF":
                 ((ProductsFragment) currentFragment).addProduct();
                 break;
+            case "CPF":
+                Snackbar.make(view,"crear cuentas",Snackbar.LENGTH_SHORT).show();
+                break;
             case "PP":
                 Snackbar snack = Snackbar.make(view, "Tienes " + CarritoHax.cantItems() + " productos en el carro", Snackbar.LENGTH_SHORT)
                         .setAction("CheckOut", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Toast.makeText(MainActivity.this, "Saltar la compra", Toast.LENGTH_SHORT).show();
+                                FragmentManager manager = getSupportFragmentManager();
+                                FragmentTransaction ft = manager.beginTransaction();
+                                CheckoutFragment.replaceFragment(ft, "CPF");
                             }
                         });
                 snack.show();
