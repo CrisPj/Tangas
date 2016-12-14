@@ -29,6 +29,7 @@ import java.util.List;
 
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.entities.UserData;
+import tiendita.com.tienda.fragments.CategoriesFragment;
 import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
@@ -116,19 +117,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        List<Fragment> fragments = manager.getFragments();
-        if (fragments != null) {
-            for (Fragment f :
-                    fragments) {
-                ft.remove(f);
-            }
-            ft.commit();
-            ft = manager.beginTransaction();
-        }
         switch (id) {
             case R.id.products:
-                ProductsFragment.replaceFragment(ft);
+                ProductsFragment.replaceFragment(ft,"PP");
                 setFabIcon(R.drawable.ic_add_shopping_cart_black_24dp);
+                break;
+            case R.id.admin_products:
+                ProductsFragment.replaceFragment(ft,"PF");
+                setFabIcon(R.drawable.ic_add_white_24dp);
+                break;
+            case R.id.categories:
+                CategoriesFragment.replaceFragment(ft,"CF");
+                setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.logout:
                 fab.hide();
@@ -234,6 +234,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "OF":
                 ((OrdersFragment) currentFragment).addOrder();
+                break;
+            case "PF":
+                ((ProductsFragment) currentFragment).addProduct();
                 break;
             default:
                 Snackbar.make(view, "Not sure what to do...my bad", Snackbar.LENGTH_SHORT).show();
