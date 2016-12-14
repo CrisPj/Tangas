@@ -71,23 +71,28 @@ public class ReportsFragment extends Fragment {
 
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            String message = "";
-            switch (type) {
-                case WEEK:
-                    ReportDataFragment dataFragment = new ReportDataFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.report_fragment, dataFragment);
-                    fragmentTransaction.commit();
-                    message = "WEEK";
-                    break;
-                case MONTH:
-                    message = "MONTH";
-                    break;
-                case ANNUAL:
-                    message = "ANNUAL";
-                    break;
-            }
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            Bundle args = new Bundle();
+            int day = datePicker.getDayOfMonth();
+            int month = datePicker.getMonth();
+            int year = datePicker.getYear();
+            // Parse date to date string
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(year).append("-").append(checkDigit(month + 1)).append("-").append(checkDigit(day));
+            String date = stringBuilder.toString();
+            // Put in on args
+            args.putString(ReportDataFragment.DATE_MIN, date);
+            args.putString(ReportDataFragment.TYPE, String.valueOf(type));
+
+            ReportDataFragment dataFragment = new ReportDataFragment();
+
+            dataFragment.setArguments(args);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.report_fragment, dataFragment);
+            fragmentTransaction.commit();
+        }
+
+        public String checkDigit(int number) {
+            return number <= 9 ? "0" + number : String.valueOf(number);
         }
     }
 }
