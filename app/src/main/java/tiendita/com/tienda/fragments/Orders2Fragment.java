@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,35 +26,32 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tiendita.com.tienda.R;
-import tiendita.com.tienda.activities.OneProductActivity;
-import tiendita.com.tienda.adapters.CouponRecyclerViewAdapter;
+import tiendita.com.tienda.activities.CustomerActivity;
+import tiendita.com.tienda.activities.MainActivity;
 import tiendita.com.tienda.adapters.EndlessRecyclerViewScrollListener;
 import tiendita.com.tienda.adapters.OrderRecyclerViewAdapter;
-import tiendita.com.tienda.adapters.ProductRecyclerViewAdapter;
+import tiendita.com.tienda.api.CustomersAPI;
 import tiendita.com.tienda.api.OrdersAPI;
-import tiendita.com.tienda.api.ProductsAPI;
-import tiendita.com.tienda.api.ProductsOffsetAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
-import tiendita.com.tienda.api.WoocommerceAPI;
-import tiendita.com.tienda.pojo.Coupons;
+import tiendita.com.tienda.entities.UserData;
+import tiendita.com.tienda.pojo.Customer;
 import tiendita.com.tienda.pojo.Order;
-import tiendita.com.tienda.pojo.Product;
 
 /**
  * Created by zero_ on 11/12/2016.
  */
 
-public class OrdersFragment extends CustomFragment {
+public class Orders2Fragment extends CustomFragment {
 
-    private OrderInteractionListener mListener;
+    private OrdersFragment.OrderInteractionListener mListener;
     private OrderRecyclerViewAdapter adapter;
     private Order[] orders;
 
-    public OrdersFragment() {
+    public Orders2Fragment() {
     }
 
     public static void replaceFragment(final FragmentTransaction ft, final String tag) {
-        OrdersFragment pf = new OrdersFragment();
+        Orders2Fragment pf = new Orders2Fragment();
         ft.replace(R.id.fragment_container, pf,tag);
         ft.commit();
     }
@@ -66,7 +61,10 @@ public class OrdersFragment extends CustomFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
-        api.listOrders().enqueue(new Callback<Order[]>() {
+        int id_cur = (int) UserData.User.fetchUserdata(getContext()).getId();
+        Map<String, String> params = new HashMap<>();
+        params.put("customer", "" + (id_cur));
+        api.listOrders(params).enqueue(new Callback<Order[]>() {
             @Override
             public void onResponse(Call<Order[]> call, Response<Order[]> response) {
                 orders = response.body();
@@ -84,6 +82,8 @@ public class OrdersFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Order[]> call, Throwable t) {
+                Toast.makeText(getContext(), "error" +
+                        "", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -102,6 +102,8 @@ public class OrdersFragment extends CustomFragment {
     void loadNextDataFromApi(int page) {
         Map<String, String> params = new HashMap<>();
         params.put("offset",""+(offset+=10));
+        int id_cur = (int) UserData.User.fetchUserdata(getContext()).getId();
+        params.put("customer", "" + (id_cur));
         OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
         api.listOrders(params).enqueue(new Callback<Order[]>() {
             @Override
@@ -121,7 +123,6 @@ public class OrdersFragment extends CustomFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new OrderInteractionListener();
     }
 
     @Override
@@ -186,26 +187,5 @@ public class OrdersFragment extends CustomFragment {
         alert.show();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Order item);
-    }
-
-    public class OrderInteractionListener implements OnListFragmentInteractionListener {
-
-        @Override
-        public void onListFragmentInteraction(Order item) {
-        }
-    }
 
 }

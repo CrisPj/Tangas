@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -18,16 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
-
-import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,9 +34,9 @@ import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.fragments.CategoriesFragment;
 import tiendita.com.tienda.fragments.CouponsFragment;
 import tiendita.com.tienda.fragments.LoginFragment;
+import tiendita.com.tienda.fragments.Orders2Fragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.fragments.ProductsFragment;
-import tiendita.com.tienda.fragments.ProfileFragment;
 import tiendita.com.tienda.fragments.ReportsFragment;
 import tiendita.com.tienda.fragments.UsersFragment;
 import tiendita.com.tienda.pojo.Customer;
@@ -154,6 +149,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.categories:
                 CategoriesFragment.replaceFragment(ft,"CF");
+                setFabIcon(R.drawable.ic_add_white_24dp);
+                break;
+            case R.id.order:
+                Orders2Fragment.replaceFragment(ft, "OF2");
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.logout:
@@ -289,6 +288,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "OF":
                 ((OrdersFragment) currentFragment).addOrder();
+                break;
+            case "OF2":
+                ((Orders2Fragment) currentFragment).addOrder();
                 break;
             case "PF":
                 ((ProductsFragment) currentFragment).addProduct();

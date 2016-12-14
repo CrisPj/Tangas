@@ -13,6 +13,7 @@ import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.api.CustomersAPI;
 import tiendita.com.tienda.api.ServiceGenerator;
+import tiendita.com.tienda.fragments.Orders2Fragment;
 import tiendita.com.tienda.fragments.OrdersFragment;
 import tiendita.com.tienda.pojo.Customer;
 import tiendita.com.tienda.pojo.Customers;
@@ -33,6 +34,7 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
         this.mListener = mListener;
         this.context = context;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
