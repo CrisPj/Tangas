@@ -111,4 +111,9 @@
     <string name="menu_reportes">Reportes</string>
     <string name="menu_logout">Salir</string>
     <string name="menu_settings">Cuenta</string>
+    <string name="filterDate">Filtrar por:</string>
+    <string name="filterDateDay">Día</string>
+    <string name="filterDateMonth">Mes</string>
+    <string name="filterDateAnnual">Anual</string>
+    <string name="filterDateWeekly">Semanal</string>
 </resources>
