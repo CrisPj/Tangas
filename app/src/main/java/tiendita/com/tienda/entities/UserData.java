@@ -78,10 +78,12 @@ public final class UserData {
         public static boolean isAuthenticated(Context context) {
             UserdataDbHelper helper = new UserdataDbHelper(context);
             SQLiteDatabase userDatabase = helper.getReadableDatabase();
+
             String[] projection = {
                     Userdata._ID,
                     Userdata.COLUMN_NAME_USERNAME,
-                    Userdata.COLUMN_NAME_EMAIL
+                    Userdata.COLUMN_NAME_EMAIL,
+                    Userdata.COLUMN_NAME_ROLES
             };
             Cursor query = userDatabase.query(
                     Userdata.TABLE_NAME,
@@ -114,11 +116,15 @@ public final class UserData {
                     null,
                     null
             );
-            String user_id = query.getString(0);
-            String username = query.getString(1);
-            String email = query.getString(2);
-            UserData userData = new UserData("true", Long.valueOf(user_id), username, "", null);
-            return userData;
-        }
+            if( query != null && query.moveToFirst() ){
+                String user_id = query.getString(0);
+                String username = query.getString(1);
+                String email = query.getString(2);
+                query.close();
+                return new UserData("true", Long.valueOf(user_id), username, "", null);
+
+            }
+            return  null;
+                   }
     }
 }

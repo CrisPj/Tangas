@@ -26,6 +26,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.List;
+import java.util.Objects;
 
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.entities.UserData;
@@ -70,12 +71,29 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.inflateMenu(R.menu.activity_main_drawer_admin);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         // Check auth
-        UserData.User.isAuthenticated(getApplicationContext());
+        if (UserData.User.isAuthenticated(getApplicationContext()))
+        {
+            UserData user = UserData.User.fetchUserdata(getApplicationContext());
+            long id = user.getId();
+            if (user.getRol().equals("administrator"))
+            {
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.activity_main_drawer_admin);
+            }
+            else
+            {
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.activity_main_drawer_silvestre);
+            }
+        }
+        else
+        {
+            userdataDbHelper = new UserdataDbHelper(getApplicationContext());
+        }
     }
 
     @Override
@@ -131,10 +149,15 @@ public class MainActivity extends AppCompatActivity
                 setFabIcon(R.drawable.ic_add_white_24dp);
                 break;
             case R.id.logout:
+                userdataDbHelper = new UserdataDbHelper(getApplicationContext());
+                userdataDbHelper.alv(userdataDbHelper.getWritableDatabase());
                 fab.hide();
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
+                LoginFragment lf2 = new LoginFragment();
+                ft.replace(R.id.fragment_container, lf2);
+                ft.commit();
                 break;
             case R.id.coupons:
                 CouponsFragment.replaceFragment(ft, "CP");
@@ -155,6 +178,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             default:
                 fab.hide();
+                userdataDbHelper = new UserdataDbHelper(getApplicationContext());
                 LoginFragment lf = new LoginFragment();
                 ft.replace(R.id.fragment_container, lf);
                 ft.commit();
