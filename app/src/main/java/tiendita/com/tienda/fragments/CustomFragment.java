@@ -3,6 +3,7 @@ package tiendita.com.tienda.fragments;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.View;
 
 import java.lang.reflect.Array;
@@ -42,4 +43,5 @@ public abstract class CustomFragment extends Fragment
         c[aLen] = b;
         return c;
     }
+
 }

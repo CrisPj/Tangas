@@ -1,15 +1,21 @@
 package tiendita.com.tienda.fragments;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -42,12 +48,14 @@ import tiendita.com.tienda.pojo.Products;
  * Created by zero_ on 11/12/2016.
  */
 
-public class ProductsFragment extends CustomFragment
+public class ProductsFragment extends CustomFragment implements SearchView.OnQueryTextListener
 {
 
     private Product[] products;
     private ProductsFragment.ProductInteractionListener mListener;
     private ProductRecyclerViewAdapter adapter;
+    private boolean buscar;
+    private String busqueda = "";
 
     public ProductsFragment() {
     }
@@ -84,6 +92,7 @@ public class ProductsFragment extends CustomFragment
 
             }
         });
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -101,6 +110,7 @@ public class ProductsFragment extends CustomFragment
         ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class, getContext());
         Map<String, String> params = new HashMap<>();
         params.put("offset", "" + (offset += 10));
+        if (buscar) params.put("search",busqueda);
         api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
             @Override
             public void onResponse(Call<Product[]> call, Response<Product[]> response) {
@@ -167,6 +177,44 @@ public class ProductsFragment extends CustomFragment
 
         alert.setNegativeButton("Cancel",null);
         alert.show();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        buscar = !newText.equals("");
+        if (buscar)
+            busqueda = newText;
+        ProductsOffsetAPI api = ServiceGenerator.createAuthenticatedService(ProductsOffsetAPI.class,getContext());
+        Map<String,String> params = new HashMap<>();
+        params.put("search",newText);
+        api.listProductsOffset(params).enqueue(new Callback<Product[]>() {
+            @Override
+            public void onResponse(Call<Product[]> call, Response<Product[]> response) {
+                products = response.body();
+                adapter.setProducts(products);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<Product[]> call, Throwable t) {
+                Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
+            }
+        });
+        return false;
     }
 
     public interface OnListFragmentInteractionListener {
