@@ -33,7 +33,6 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
         this.context = context;
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -52,7 +51,9 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
         api.getCustomer(order.getCustomerId()).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if (response.body() != null)
                 holder.txtCustomer.setText(response.body().getUsername());
+                else holder.txtCustomer.setText("sin user");
             }
 
             @Override

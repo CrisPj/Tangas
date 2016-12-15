@@ -15,16 +15,24 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tiendita.com.tienda.R;
 import tiendita.com.tienda.activities.OneProductActivity;
 import tiendita.com.tienda.adapters.CheckoutRecyclerViewAdapter;
+import tiendita.com.tienda.api.OrdersAPI;
+import tiendita.com.tienda.api.ServiceGenerator;
+import tiendita.com.tienda.entities.UserData;
 import tiendita.com.tienda.pojo.CarritoHax;
 import tiendita.com.tienda.pojo.LineItem;
+import tiendita.com.tienda.pojo.Order;
 import tiendita.com.tienda.pojo.Product;
 
 /**
@@ -117,6 +125,30 @@ public class CheckoutFragment extends Fragment
 
         alert.setNegativeButton("Cancel",null);
         alert.show();
+    }
+
+    public void addOrder() {
+        Order nuevo = new Order();
+        nuevo.setLineItems(CarritoHax.getItems());
+        UserData user = UserData.User.fetchUserdata(getContext());
+        long id = user.getId();
+        nuevo.setCustomerId((int)id);
+        OrdersAPI api = ServiceGenerator.createAuthenticatedService(OrdersAPI.class, getContext());
+        api.addOrder(nuevo).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                Toast.makeText(getContext(),"Creado correctamente",Toast.LENGTH_LONG).show();
+                CarritoHax.remove();
+                products = CarritoHax.getItems();
+                adapter.setProducts(products);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                Toast.makeText(getContext(),"error",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 

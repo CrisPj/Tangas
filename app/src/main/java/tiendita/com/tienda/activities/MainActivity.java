@@ -300,7 +300,15 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, rf, "GH").commit();
                 break;
             case "GH":
-                Toast.makeText(getApplicationContext(), "Sale pa cupon y para pagar", Toast.LENGTH_LONG).show();
+                if (UserData.User.isAuthenticated(getApplicationContext())) {
+                    ((CheckoutFragment) currentFragment).addOrder();
+                }
+                else {
+                    fab.hide();
+                    userdataDbHelper = new UserdataDbHelper(getApplicationContext());
+                    LoginFragment lf = new LoginFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, lf).commit();
+                }
                 break;
             default:
                 Snackbar.make(view, "Not sure what to do...my bad", Snackbar.LENGTH_SHORT).show();

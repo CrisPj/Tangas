@@ -24,4 +24,8 @@ public final class CarritoHax {
     public static List<LineItem> getItems() {
         return carrito;
     }
+
+    public static void remove() {
+        carrito.clear();
+    }
 }
